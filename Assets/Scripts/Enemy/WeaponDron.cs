@@ -6,17 +6,22 @@ namespace Shooter
 {
     public class WeaponDron : WeaponBase
     {
-        [SerializeField] 
+        [SerializeField] private Transform _barrel2;
+
         public override void Fire()
-        {
-            _readyToShoot = _timer.TimeIsUp(_shootInterval);
-            if (_readyToShoot)
+        {           
+            if (IsReady)
             {
-                var tempAmmunation = Instantiate(_bullets, _barrelLeft.position, _barrelLeft.rotation);
-                tempAmmunation.AddForce(_barrelLeft.forward * _bulletForce);
-                tempAmmunation = Instantiate(_bullets, _barrelRight.position, _barrelRight.rotation);
-                tempAmmunation.AddForce(_barrelRight.forward * _bulletForce);
+                var tempAmmunation = Instantiate(Ammunition, _barrel.position, _barrel.rotation);
+                tempAmmunation.AddForce(_barrel.forward * _force);
+                tempAmmunation = Instantiate(Ammunition, _barrel2.position, _barrel.rotation);
+                tempAmmunation.AddForce(_barrel.forward * _force);
             }
+        }
+
+        public override void StopFire()
+        {
+
         }
     }
 }

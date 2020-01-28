@@ -7,8 +7,6 @@ namespace Shooter
     {
         public float Health;
 
-        [SerializeField] private Transform _barrelLeft;
-        [SerializeField] private Transform _barrelRight;
         [SerializeField] private Ammunition _bullets;
         [SerializeField] private float _bulletForce = 999;
 
@@ -21,6 +19,7 @@ namespace Shooter
         private Timer _timer = new Timer();
         private float _shootInterval = 1;
         private bool _readyToShoot;
+        private WeaponBase _weapon;
 
         protected override void Awake()
         {
@@ -29,6 +28,7 @@ namespace Shooter
             _eyeLight = GetComponentInChildren<Light>();
             _explotion = GetComponentInChildren<ParticleSystem>();
             target = FindObjectOfType<CharacterController>().transform;
+            _weapon = GetComponent<WeaponDron>();
 
             Rigidbody.isKinematic = true;
             _eyeLight.enabled = true;
@@ -39,7 +39,7 @@ namespace Shooter
         {
             if(agent.enabled)
             agent.SetDestination(target.position);
-            Fire();
+            _weapon.Fire();
         }
 
         
@@ -53,16 +53,5 @@ namespace Shooter
             Destroy(gameObject, 1);
         }
 
-        public void Fire()
-        {
-            _readyToShoot = _timer.TimeIsUp(_shootInterval);
-            if (_readyToShoot)
-            {
-                var tempAmmunation = Instantiate(_bullets, _barrelLeft.position, _barrelLeft.rotation);
-                tempAmmunation.AddForce(_barrelLeft.forward* _bulletForce);
-                tempAmmunation = Instantiate(_bullets, _barrelRight.position, _barrelRight.rotation);
-                tempAmmunation.AddForce(_barrelRight.forward * _bulletForce);
-            }
-        }
     }
 }
