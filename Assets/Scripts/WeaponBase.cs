@@ -21,7 +21,6 @@ namespace Shooter
 
         private void OnCollisionEnter(Collision collision)
         {
-            print("gotcol");
             if (collision.gameObject.CompareTag(TagManager.PLAYER))
             {
                 transform.parent = Camera.main.transform;
