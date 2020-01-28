@@ -21,6 +21,7 @@ namespace Shooter
 
         private void OnCollisionEnter(Collision collision)
         {
+            print("gotcol");
             if (collision.gameObject.CompareTag(TagManager.PLAYER))
             {
                 transform.parent = Camera.main.transform;
@@ -28,6 +29,7 @@ namespace Shooter
                 Transform weaponPosition = GameObject.FindGameObjectWithTag(TagManager.WeaponPosition).transform;
                 transform.position = weaponPosition.position;
                 transform.rotation = weaponPosition.rotation;
+                Collider.enabled = false;
             }
         }
 
