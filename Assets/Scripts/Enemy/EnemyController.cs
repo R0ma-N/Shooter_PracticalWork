@@ -7,30 +7,24 @@ namespace Shooter
     public class EnemyController : BaseController, IOnUpdate, IOnInitialize
     {
         public Enemy _dron;
-        private Transform _target;
+        private Transform _player;
         private EnemyStates _state = new EnemyStates();
 
         public void OnStart()
         {
             _dron = GameObject.FindObjectOfType<Enemy>();
-            _target = GameObject.FindObjectOfType<CharacterController>().transform;
+            _player = GameObject.FindObjectOfType<CharacterController>().transform;
             _dron.Eye.EyeGetDamage.AddListener(Death);
             _dron.Body.BodyGetDamage.AddListener(GetDamage);
             _dron.Rigidbody.isKinematic = true;
             _dron.Explotion.Stop();
-            Debug.Log("EnemyControl");
-            _state.Patrol(_dron);
         }
 
         public void OnUpdate()
         {
             if (_dron)
             {
-                //Debug.Log("dron");
-                //_dron.Agent.SetDestination(_target.position);
-                //_dron.Weapon.Fire();
-                //_state.Patrol();
-            //_state.Patrol(_dron);
+                _state.Patrol(_dron);
             }
         }
         

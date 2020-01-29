@@ -6,29 +6,32 @@ namespace Shooter
 {
     public class EnemyStates
     {
-        public Transform[] _patrolPoints;
-        public Enemy _enemy;
-        
+        private Transform[] _patrolPoints;
+        private int destPoint = 1;
 
         public EnemyStates()
         {
-            _patrolPoints = Object.FindObjectOfType<PatrolPoints>().points;
-            _enemy = GameObject.FindObjectOfType<Enemy>();
-            Debug.Log(_patrolPoints[0].position);
-            Debug.Log(_enemy.transform.position);
-            Ray ray = new Ray(_enemy.transform.position, _enemy.transform.forward);
+            _patrolPoints = Object.FindObjectOfType<PatrolPoints>().Points;
+            Debug.Log($"StatesConst {_patrolPoints.Length}");
         }
 
         public void Patrol(Enemy enemy)
         {
-            Debug.Log("void");
-            Debug.DrawLine(_enemy.transform.position, _enemy.transform.forward);
-            enemy.Agent.SetDestination(_patrolPoints[1].position);
-            //if (enemy.Collider)
-            //{
-            //    enemy.Agent.SetDestination(_patrolPoints[2].position);
-            //}
+            _patrolPoints = Object.FindObjectOfType<PatrolPoints>().Points;
+
+            enemy.Agent.destination = _patrolPoints[destPoint].position;
+
+            if (!enemy.Agent.pathPending && enemy.Agent.remainingDistance < 0.5)
+            {
+                destPoint++;
+                if(destPoint == _patrolPoints.Length)
+                {
+                    destPoint = 0;
+                }
+            }
+            
             enemy.Eye.Light.color = Color.green;
         }
+
     }
 }

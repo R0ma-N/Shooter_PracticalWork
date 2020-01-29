@@ -6,11 +6,12 @@ namespace Shooter
 {
     public class PatrolPoints : MonoBehaviour
     {
-        public Transform[] points;
+        public Transform[] Points;
 
         private void Awake()
         {
-            points = GetComponentsInChildren<Transform>();
+            Points = GetComponentsInChildren<Transform>();
+            Debug.Log(Points.Length);
         }
     }
 }
