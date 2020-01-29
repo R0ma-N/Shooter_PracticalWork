@@ -7,50 +7,25 @@ namespace Shooter
     {
         public float Health;
 
-        [SerializeField] private Ammunition _bullets;
-        [SerializeField] private float _bulletForce = 999;
-
-
-        private NavMeshAgent agent;
-        private Transform target;
-
-        private Light _eyeLight;
-        private ParticleSystem _explotion;
-        private Timer _timer = new Timer();
-        private float _shootInterval = 1;
-        private bool _readyToShoot;
-        private WeaponBase _weapon;
+        public NavMeshAgent Agent;
+        public WeaponDron Weapon;
+        public ParticleSystem Explotion;
+        public BodyDron Body;
+        public EyeDron Eye;
 
         protected override void Awake()
         {
             base.Awake();
-            agent = GetComponent<NavMeshAgent>();
-            _eyeLight = GetComponentInChildren<Light>();
-            _explotion = GetComponentInChildren<ParticleSystem>();
-            target = FindObjectOfType<CharacterController>().transform;
-            _weapon = GetComponent<WeaponDron>();
-
-            Rigidbody.isKinematic = true;
-            _eyeLight.enabled = true;
-            _explotion.Stop();
+            Body = GetComponentInChildren<BodyDron>();
+            Eye = GetComponentInChildren<EyeDron>();
+            Agent = GetComponent<NavMeshAgent>();
+            Explotion = GetComponentInChildren<ParticleSystem>();
+            Weapon = GetComponentInChildren<WeaponDron>();
         }
 
-        void Update()
+        public void Destroy(float time)
         {
-            if(agent.enabled)
-            agent.SetDestination(target.position);
-            _weapon.Fire();
-        }
-
-        
-
-        public void OnDeath()
-        {
-            _eyeLight.enabled = false;
-            Rigidbody.isKinematic = false;
-            _explotion.Play();
-            agent.enabled = false;
-            Destroy(gameObject, 1);
+            Destroy(gameObject, time);
         }
 
     }

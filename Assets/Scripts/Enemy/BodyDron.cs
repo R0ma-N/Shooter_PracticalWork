@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class BodyDron : MonoBehaviour
+namespace Shooter
 {
-    // Start is called before the first frame update
-    void Start()
+    public class BodyDron : BaseObjectModel, IDamageable
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public UnityEvent BodyGetDamage = new UnityEvent();
+        public float Damage;
+        public void getDamage(float damage)
+        {
+            BodyGetDamage?.Invoke();
+            Damage = damage;
+            print("invoke");
+        }
     }
 }

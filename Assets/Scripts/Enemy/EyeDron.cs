@@ -1,18 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class EyeDron : MonoBehaviour
+namespace Shooter
 {
-    // Start is called before the first frame update
-    void Start()
+    public class EyeDron : BaseObjectModel, IDamageable
     {
-        
-    }
+        public Light Light;
+        public UnityEvent EyeGetDamage = new UnityEvent();
+        public float Damage;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        override protected void Awake()
+        {
+            base.Awake();
+            Light = GetComponent<Light>();
+        }
+
+        public void getDamage(float damage)
+        {
+            EyeGetDamage?.Invoke();
+            Damage = damage;
+        }
     }
 }

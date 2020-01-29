@@ -4,24 +4,27 @@ using UnityEngine;
 
 namespace Shooter
 {
-    public class WeaponDron : WeaponBase
+    public class WeaponDron : BaseObjectModel
     {
+        [SerializeField] private Transform _barrel;
         [SerializeField] private Transform _barrel2;
+        [SerializeField] private Ammunition _ammunition;
+        [SerializeField] private float _shootInterval = 0.5f;
+        [SerializeField] private float _force = 999;
 
-        public override void Fire()
-        {           
-            if (IsReady)
+        private bool _isReady;
+        private Timer _timer = new Timer();
+        
+        public void Fire()
+        {
+            _isReady = _timer.TimeIsUp(_shootInterval);
+            if (_isReady)
             {
-                var tempAmmunation = Instantiate(Ammunition, _barrel.position, _barrel.rotation);
+                var tempAmmunation = Instantiate(_ammunition, _barrel.position, _barrel.rotation);
                 tempAmmunation.AddForce(_barrel.forward * _force);
-                tempAmmunation = Instantiate(Ammunition, _barrel2.position, _barrel.rotation);
+                tempAmmunation = Instantiate(_ammunition, _barrel2.position, _barrel2.rotation);
                 tempAmmunation.AddForce(_barrel.forward * _force);
             }
-        }
-
-        public override void StopFire()
-        {
-
         }
     }
 }
