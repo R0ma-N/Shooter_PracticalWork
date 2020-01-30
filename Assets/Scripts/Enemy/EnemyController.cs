@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
 namespace Shooter
@@ -9,11 +8,14 @@ namespace Shooter
         public Enemy _dron;
         private Transform _player;
         private EnemyStates _state = new EnemyStates();
+        private ZoneOfDetect _zoneOfDetect;
+        private bool _playerDetected;
 
         public void OnStart()
         {
             _dron = GameObject.FindObjectOfType<Enemy>();
             _player = GameObject.FindObjectOfType<CharacterController>().transform;
+            _zoneOfDetect = GameObject.FindObjectOfType<ZoneOfDetect>();
             _dron.Eye.EyeGetDamage.AddListener(Death);
             _dron.Body.BodyGetDamage.AddListener(GetDamage);
             _dron.Rigidbody.isKinematic = true;
@@ -24,7 +26,12 @@ namespace Shooter
         {
             if (_dron)
             {
+                _playerDetected = _zoneOfDetect.PlayerDetected;
                 _state.Patrol(_dron);
+                if (_playerDetected)
+                {
+                    _state.Attack(_dron, _player);
+                }
             }
         }
         

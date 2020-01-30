@@ -33,5 +33,12 @@ namespace Shooter
             enemy.Eye.Light.color = Color.green;
         }
 
+        public void Attack(Enemy enemy, Transform target)
+        {
+            enemy.Agent.destination = target.position;
+            enemy.Weapon.Fire();
+            enemy.Eye.Light.color = Color.red;
+        }
+
     }
 }
