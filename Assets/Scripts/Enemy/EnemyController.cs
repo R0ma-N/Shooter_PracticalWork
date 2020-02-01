@@ -49,7 +49,7 @@ namespace Shooter
             _dron.Eye.EyeGetDamage.RemoveAllListeners();
             _dron.Body.BodyGetDamage.RemoveAllListeners();
             _dron.Eye.Light.enabled = false;
-            _dron.Agent.enabled = false;
+            _dron.Agent = null;
             _dron.Rigidbody.isKinematic = false;
             _dron.Body.Rigidbody.isKinematic = false;
             _dron.Explotion.Play();
