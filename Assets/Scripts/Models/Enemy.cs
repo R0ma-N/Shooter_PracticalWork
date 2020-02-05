@@ -10,6 +10,7 @@ namespace Shooter
         public NavMeshAgent Agent;
         public WeaponDron Weapon;
         public ParticleSystem Explotion;
+        public ZoneOfDetect ZoneOfDetect;
         public BodyDron Body;
         public EyeDron Eye;
 
@@ -21,6 +22,7 @@ namespace Shooter
             Agent = GetComponent<NavMeshAgent>();
             Explotion = GetComponentInChildren<ParticleSystem>();
             Weapon = GetComponentInChildren<WeaponDron>();
+            ZoneOfDetect = GetComponentInChildren<ZoneOfDetect>();
         }
 
         public void Destroy(float time)
