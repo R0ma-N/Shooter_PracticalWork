@@ -16,8 +16,9 @@ namespace Shooter
             if (collision.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
             {
                 damageable.getDamage(_Damage);
+                Debug.Log("CollissionDamag");
             }
-
+            Debug.Log(collision.collider.name);
             Destroy(gameObject);
         }
     }

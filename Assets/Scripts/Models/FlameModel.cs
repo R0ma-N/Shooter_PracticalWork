@@ -9,6 +9,11 @@ namespace Shooter
         {
             if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
             {
+                if (other.gameObject.GetComponent<EyeDron>())
+                {
+                    return;
+                }
+                
                 damageable.getDamage(_Damage);
             }
         }

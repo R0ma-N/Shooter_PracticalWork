@@ -28,6 +28,7 @@ namespace Shooter
                 Transform weaponPosition = GameObject.FindGameObjectWithTag(TagManager.WeaponPosition).transform;
                 transform.position = weaponPosition.position;
                 transform.rotation = weaponPosition.rotation;
+                Collider.enabled = false;
             }
         }
 
