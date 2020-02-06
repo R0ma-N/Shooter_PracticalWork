@@ -675,8 +675,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.4062893e-25, y: 4.852579e-25, z: 3.4353125e-11,
-    w: 1.4062893e-25}
+  m_BoundingSphereOverride: {x: 48.31844, y: 50922776, z: 0.19946, w: 9.791556e-12}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1604,6 +1603,11 @@ PrefabInstance:
         type: 3}
       propertyPath: UVModule.flipV
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198856239026640498, guid: 9bba9cf244c53c5439505dfc96fdd11c,
+        type: 3}
+      propertyPath: useRigidbodyForVelocity
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
@@ -4618,6 +4622,7 @@ MonoBehaviour:
   Agent: {fileID: 0}
   Weapon: {fileID: 0}
   Explotion: {fileID: 0}
+  ZoneOfDetect: {fileID: 0}
   Body: {fileID: 0}
   Eye: {fileID: 0}
 --- !u!195 &1805155536
