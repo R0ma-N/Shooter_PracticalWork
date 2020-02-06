@@ -6,9 +6,12 @@ namespace Shooter
     {
         private FlashLightController _flashLightController = new FlashLightController();
         private WeaponController _weaponController = new WeaponController();
+        private SaveDataRepository _saveData = new SaveDataRepository();
 
         private KeyCode _activeFlashLight = KeyCode.F;
         private KeyCode _cancel = KeyCode.Escape;
+        private KeyCode _save = KeyCode.C;
+        private KeyCode _load = KeyCode.V;
 
         public InputController()
         {
@@ -26,6 +29,16 @@ namespace Shooter
             {
                 _flashLightController.Off();
                 _weaponController.Off();
+            }
+
+            if (Input.GetKeyDown(_save))
+            {
+                _saveData.Save();
+            }
+
+            if (Input.GetKeyDown(_load))
+            {
+                _saveData.Load();
             }
         }
     }

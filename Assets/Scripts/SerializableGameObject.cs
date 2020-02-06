@@ -63,6 +63,18 @@ namespace Shooter
             Z = z;
             W = w;
         }
-    }
+        public static implicit operator Quaternion(SerializableQuaternion value)
+        {
+            return new Quaternion(value.X, value.Y, value.Z, value.W);
+        }
+        public static implicit operator SerializableQuaternion(Quaternion value)
+        {
+            return new SerializableQuaternion(value.x, value.y, value.z, value.w);
+        }
 
+        public override string ToString()
+        {
+            return $"X = {X}; Y = {Y}; Z = {Z}; W = {W};";
+        }
+    }
 }
