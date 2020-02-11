@@ -27,6 +27,12 @@ namespace Shooter
 
         public void Destroy(float time)
         {
+            Eye.Light.enabled = false;
+            Agent = null;
+            Rigidbody.isKinematic = false;
+            Body.Rigidbody.isKinematic = false;
+            Eye.Rigidbody.isKinematic = false;
+            Explotion.Play();
             Destroy(gameObject, time);
         }
 

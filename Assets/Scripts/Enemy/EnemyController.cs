@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Shooter
 {
@@ -18,20 +17,19 @@ namespace Shooter
             _zoneOfDetect = GameObject.FindObjectOfType<ZoneOfDetect>();
             _dron.Eye.EyeGetDamage.AddListener(Death);
             _dron.Body.BodyGetDamage.AddListener(GetDamage);
-            _dron.Rigidbody.isKinematic = true;
             _dron.Explotion.Stop();
         }
 
         public void OnUpdate()
         {
-            if (_dron)
+            if (!_dron) return;
+
+            _playerDetected = _zoneOfDetect.PlayerDetected;
+            _state.Patrol(_dron);
+
+            if (_playerDetected)
             {
-                _playerDetected = _zoneOfDetect.PlayerDetected;
-                _state.Patrol(_dron);
-                if (_playerDetected)
-                {
-                    _state.Attack(_dron, _player);
-                }
+                _state.Attack(_dron, _player);
             }
         }
         
@@ -48,11 +46,6 @@ namespace Shooter
         {
             _dron.Eye.EyeGetDamage.RemoveAllListeners();
             _dron.Body.BodyGetDamage.RemoveAllListeners();
-            _dron.Eye.Light.enabled = false;
-            _dron.Agent = null;
-            _dron.Rigidbody.isKinematic = false;
-            _dron.Body.Rigidbody.isKinematic = false;
-            _dron.Explotion.Play();
             _dron.Destroy(2);
         }
     }
