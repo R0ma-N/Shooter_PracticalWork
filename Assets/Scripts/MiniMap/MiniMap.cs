@@ -5,17 +5,17 @@ namespace Shooter
 	public class MiniMap : MonoBehaviour
 	{
 		private Transform _player;
-		float storedShadoDistance;
+		float storedShadowDistance;
 
 		private void OnPreRender()
 		{
-			storedShadoDistance = QualitySettings.shadowDistance;
+			storedShadowDistance = QualitySettings.shadowDistance;
 			QualitySettings.shadowDistance = 0;
 		}
 
 		private void OnPostRender()
 		{
-			QualitySettings.shadowDistance = storedShadoDistance;
+			QualitySettings.shadowDistance = storedShadowDistance;
 		}
 
 		private void Start()
