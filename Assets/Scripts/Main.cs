@@ -40,6 +40,11 @@ namespace Shooter
                 controller.OnStart();
             }
             _weaponController.On();
+
+            for (int i = 0; i < _controllersUpdate.Length; i++)
+            {
+                Debug.Log(i + " " + _controllersUpdate[i]);
+            }
         }
 
         void Update()
