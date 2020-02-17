@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<SerializableGameObject xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Name>Player</Name>
+  <Pos>
+    <X>6.70363951</X>
+    <Y>2.370477</Y>
+    <Z>11.6337481</Z>
+  </Pos>
+  <Rot>
+    <X>0</X>
+    <Y>0</Y>
+    <Z>0</Z>
+    <W>0</W>
+  </Rot>
+  <Scale>
+    <X>0</X>
+    <Y>0</Y>
+    <Z>0</Z>
+  </Scale>
+  <IsEnable>true</IsEnable>
+</SerializableGameObject>
