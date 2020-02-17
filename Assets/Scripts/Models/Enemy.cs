@@ -28,6 +28,7 @@ namespace Shooter
         public void Destroy(float time)
         {
             Eye.Light.enabled = false;
+            Agent.enabled = false;
             Agent = null;
             Rigidbody.isKinematic = false;
             Body.Rigidbody.isKinematic = false;

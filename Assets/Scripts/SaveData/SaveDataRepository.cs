@@ -10,13 +10,13 @@ namespace Shooter
 		private const string _folderName = "dataSave";
 		private const string _fileName = "data.bat";
 		private readonly string _path;
-		private Transform _player;
+		private CharacterController _player;
 
 		public SaveDataRepository()
 		{
 			_data = new JsonData<SerializableGameObject>();
 			_path = Path.Combine(Application.dataPath, _folderName);
-			_player = GameObject.FindObjectOfType<CharacterController>().transform;
+			_player = GameObject.FindObjectOfType<CharacterController>();
 		}
 
 		public void Save()
@@ -27,7 +27,7 @@ namespace Shooter
 			}
 			var player = new SerializableGameObject
 			{
-				Pos = _player.position,
+				Pos = _player.transform.position,
 				Name = "New Player",
 				IsEnable = true
 			};
@@ -40,7 +40,7 @@ namespace Shooter
 			var file = Path.Combine(_path, _fileName);
 			if (!File.Exists(file)) return;
 			var newPlayer = _data.Load(file);
-			_player.position = newPlayer.Pos;
+			_player.Move(newPlayer.Pos);
 			_player.name = newPlayer.Name;
 			_player.gameObject.SetActive(newPlayer.IsEnable);
 

@@ -12,7 +12,6 @@ namespace Shooter
         private EnemyController _enemyController;
         private IOnUpdate[] _controllersUpdate;
         private IOnInitialize[] _controllersInit;
-        int update = 0;
 
         private void Awake()
         {
@@ -41,11 +40,6 @@ namespace Shooter
                 controller.OnStart();
             }
             _weaponController.On();
-
-            for (int i = 0; i < _controllersUpdate.Length; i++)
-            {
-                Debug.Log(i + " " + _controllersUpdate[i]);
-            }
         }
 
         void Update()
@@ -54,10 +48,7 @@ namespace Shooter
             {
                 var controller = _controllersUpdate[i];
                 controller.OnUpdate();
-                Debug.Log(i + " " + _controllersUpdate[i]);
             }
-            update++;
-            print(update + " update");
         }
     }
 }
