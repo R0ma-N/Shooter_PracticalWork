@@ -7,6 +7,7 @@ namespace Shooter
         private FlashLightController _flashLightController = new FlashLightController();
         private WeaponController _weaponController = new WeaponController();
         private SaveDataRepository _saveDataRepository = new SaveDataRepository();
+        private Animator _playerAnimation;
 
         private KeyCode _activeFlashLight = KeyCode.F;
         private KeyCode _cancel = KeyCode.Escape;
@@ -16,10 +17,21 @@ namespace Shooter
         public InputController()
         {
             Cursor.lockState = CursorLockMode.Locked;
+            _playerAnimation = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Animator>();
         }
         
         public void OnUpdate()
         {
+            if (Input.GetKey(KeyCode.W))
+            {
+                _playerAnimation.SetBool("forward", true);
+                return;
+            }
+            else if (Input.GetKeyUp(KeyCode.W))
+            {
+                _playerAnimation.SetBool("forward", false);
+            }
+            
             if (Input.GetKeyDown(_activeFlashLight))
             {
                 _flashLightController.Switch();
@@ -40,6 +52,8 @@ namespace Shooter
             {
                 _saveDataRepository.Load();
             }
+
+
         }
     }
 }
