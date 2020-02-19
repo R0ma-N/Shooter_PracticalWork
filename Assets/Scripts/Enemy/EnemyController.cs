@@ -13,7 +13,7 @@ namespace Shooter
         public void OnStart()
         {
             _dron = GameObject.FindObjectOfType<Enemy>();
-            _player = GameObject.FindObjectOfType<CharacterController>().transform;
+            _player = GameObject.FindGameObjectWithTag(TagManager.PLAYER).transform;
             _zoneOfDetect = GameObject.FindObjectOfType<ZoneOfDetect>();
             _dron.Eye.EyeGetDamage.AddListener(Death);
             _dron.Body.BodyGetDamage.AddListener(GetDamage);

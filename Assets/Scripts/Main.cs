@@ -5,7 +5,7 @@ namespace Shooter
 {
     public class Main : MonoBehaviour
     {
-        private PlayerController _playerController;
+        //private PlayerController _playerController;
         private InputController _inputController;
         private FlashLightController _flashLightController;
         private WeaponController _weaponController;
@@ -15,7 +15,7 @@ namespace Shooter
 
         private void Awake()
         {
-            _playerController = new PlayerController();
+            //_playerController = new PlayerController();
             _inputController = new InputController();
             _flashLightController = new FlashLightController();
             _weaponController = new WeaponController();
@@ -25,12 +25,12 @@ namespace Shooter
             _controllersInit[0] = _flashLightController;
             _controllersInit[1] = _enemyController;
             
-            _controllersUpdate = new IOnUpdate[5];
+            _controllersUpdate = new IOnUpdate[3];
             _controllersUpdate[0] = _inputController;
-            _controllersUpdate[1] = _playerController;
-            _controllersUpdate[2] = _flashLightController;
-            _controllersUpdate[3] = _weaponController;
-            _controllersUpdate[4] = _enemyController;
+            //_controllersUpdate[1] = _playerController;
+            _controllersUpdate[1] = _flashLightController;
+            //_controllersUpdate[2] = _weaponController;
+            _controllersUpdate[2] = _enemyController;
         }
         void Start()
         {

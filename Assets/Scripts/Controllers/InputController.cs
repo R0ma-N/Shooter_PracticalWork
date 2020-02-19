@@ -22,16 +22,15 @@ namespace Shooter
         
         public void OnUpdate()
         {
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.W))
             {
                 _playerAnimation.SetBool("forward", true);
-                return;
             }
             else if (Input.GetKeyUp(KeyCode.W))
             {
                 _playerAnimation.SetBool("forward", false);
             }
-            
+
             if (Input.GetKeyDown(_activeFlashLight))
             {
                 _flashLightController.Switch();

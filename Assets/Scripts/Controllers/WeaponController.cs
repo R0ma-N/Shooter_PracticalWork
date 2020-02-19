@@ -12,9 +12,9 @@ namespace Shooter
         
         public WeaponController()
         {
-            _activeWeapon = Inventory.Weapons[0];
-            _timer = new Timer();
-            WeaponBase.GotNewWeapon.AddListener(NewWeapon);
+            //_activeWeapon = Inventory.Weapons[0];
+            //_timer = new Timer();
+            //WeaponBase.GotNewWeapon.AddListener(NewWeapon);
         }
 
         public void OnUpdate()
