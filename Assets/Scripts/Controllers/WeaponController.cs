@@ -29,14 +29,16 @@ namespace Shooter
                     _activeWeapon.IsReady = _timer.TimeIsUp(_activeWeapon.ShootInterval);
                 }
                 else return;
-                _playerAnimation.SetTrigger("Shoot");
+                _playerAnimation.SetBool("Shoot", true);
+                Debug.Log("fire");
             }
             else if (Input.GetKeyUp(_fire))
             {
                 _activeWeapon.IsReady = true;
                 _timer.DistTime = 0;
-
-                if(_activeWeapon is Flamethrower)
+                _playerAnimation.SetBool("Shoot", false);
+                Debug.Log("STOPfire");
+                if (_activeWeapon is Flamethrower)
                 {
                     _activeWeapon.StopFire();
                 }
