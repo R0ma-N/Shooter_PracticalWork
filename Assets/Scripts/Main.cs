@@ -25,12 +25,12 @@ namespace Shooter
             _controllersInit[0] = _flashLightController;
             _controllersInit[1] = _enemyController;
             
-            _controllersUpdate = new IOnUpdate[3];
+            _controllersUpdate = new IOnUpdate[4];
             _controllersUpdate[0] = _inputController;
             //_controllersUpdate[1] = _playerController;
             _controllersUpdate[1] = _flashLightController;
-            //_controllersUpdate[2] = _weaponController;
-            _controllersUpdate[2] = _enemyController;
+            _controllersUpdate[2] = _weaponController;
+            _controllersUpdate[3] = _enemyController;
         }
         void Start()
         {

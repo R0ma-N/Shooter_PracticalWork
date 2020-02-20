@@ -8,6 +8,8 @@ namespace Shooter
         private WeaponController _weaponController = new WeaponController();
         private SaveDataRepository _saveDataRepository = new SaveDataRepository();
         private Animator _playerAnimation;
+        private Transform _player;
+        private float sensitivity = 4;
 
         private KeyCode _activeFlashLight = KeyCode.F;
         private KeyCode _cancel = KeyCode.Escape;
@@ -18,6 +20,7 @@ namespace Shooter
         {
             Cursor.lockState = CursorLockMode.Locked;
             _playerAnimation = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Animator>();
+            _player = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Transform>();
         }
         
         public void OnUpdate()
@@ -30,6 +33,16 @@ namespace Shooter
             {
                 _playerAnimation.SetBool("forward", false);
             }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log("OKKK");
+                _playerAnimation.SetTrigger("Jump");
+            }
+
+            float yRot = Input.GetAxis("Mouse X") * sensitivity;
+            _player.localRotation *= Quaternion.Euler(0f, yRot, 0f);
+
 
             if (Input.GetKeyDown(_activeFlashLight))
             {

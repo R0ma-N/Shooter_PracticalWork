@@ -19,7 +19,7 @@ namespace Shooter
             limit = Mathf.Abs(limit);
             if (limit > 90) limit = 90;
             offset = new Vector3(offset.x, offset.y, distance);
-            transform.position = _player.position + offset;
+            //transform.position = _player.position + offset;
         }
 
 
@@ -28,7 +28,7 @@ namespace Shooter
             //transform.localRotation *= Quaternion.Euler(-xRot, 0f, 0f);
             ////transform.position = new Vector3 (_player.position.x, _player.position.y + 1.5f, _player.position.z - 1.5f) ;
             ////transform.RotateAround(_player.position, _player.position, yRot);
-            ////_player.rotation = new Quaternion(_player.rotation.x, transform.rotation.y, _player.rotation.z, _player.rotation.w);
+            //_player.rotation = new Quaternion(_player.rotation.x, transform.rotation.y, _player.rotation.z, _player.rotation.w);
             //X = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivity;
             //Y += Input.GetAxis("Mouse Y") * sensitivity;
             //Y = Mathf.Clamp(Y, -limit, limit);

@@ -8,12 +8,14 @@ namespace Shooter
         private Timer _timer;
         private KeyCode _fire = KeyCode.Mouse0;
         private KeyCode _reload = KeyCode.R;
-        private int _index = 0;
+        private int _index = 1;
+        private Animator _playerAnimation;
         
         public WeaponController()
         {
-            //_activeWeapon = Inventory.Weapons[0];
-            //_timer = new Timer();
+            _activeWeapon = Inventory.Weapons[0];
+            _playerAnimation = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Animator>();
+            _timer = new Timer();
             //WeaponBase.GotNewWeapon.AddListener(NewWeapon);
         }
 
@@ -27,6 +29,7 @@ namespace Shooter
                     _activeWeapon.IsReady = _timer.TimeIsUp(_activeWeapon.ShootInterval);
                 }
                 else return;
+                _playerAnimation.SetTrigger("Shoot");
             }
             else if (Input.GetKeyUp(_fire))
             {
