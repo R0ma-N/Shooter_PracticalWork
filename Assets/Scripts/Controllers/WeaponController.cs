@@ -21,6 +21,9 @@ namespace Shooter
 
         public void OnUpdate()
         {
+            
+
+
             if (Input.GetKey(_fire))
             {
                 if(_activeWeapon.BulletsCount > 0)

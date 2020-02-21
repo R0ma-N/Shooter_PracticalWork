@@ -8,6 +8,7 @@ namespace Shooter
         private WeaponController _weaponController = new WeaponController();
         private SaveDataRepository _saveDataRepository = new SaveDataRepository();
         private Animator _playerAnimation;
+        private Animator _camera;
         private Transform _player;
         private float sensitivity = 4;
 
@@ -20,6 +21,7 @@ namespace Shooter
         {
             Cursor.lockState = CursorLockMode.Locked;
             _playerAnimation = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Animator>();
+            _camera = Camera.main.GetComponent<Animator>();
             _player = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Transform>();
         }
         
@@ -32,6 +34,17 @@ namespace Shooter
             else if (Input.GetKeyUp(KeyCode.W))
             {
                 _playerAnimation.SetBool("forward", false);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                _camera.SetBool("IsShooting", true);
+                Debug.Log("On");
+            }
+            else if (Input.GetKeyUp(KeyCode.Mouse1))
+            {
+                _camera.SetBool("IsShooting", false);
+                Debug.Log("Off");
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
