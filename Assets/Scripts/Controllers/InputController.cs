@@ -6,7 +6,9 @@ namespace Shooter
     {
         private FlashLightController _flashLightController = new FlashLightController();
         private WeaponController _weaponController = new WeaponController();
+        private PlayerController _playerController = new PlayerController();
         private SaveDataRepository _saveDataRepository = new SaveDataRepository();
+        private CellPoint _cellPointUI;
         private Animator _playerAnimation;
         private Animator _camera;
         private Transform _player;
@@ -17,6 +19,9 @@ namespace Shooter
         private KeyCode _save = KeyCode.C;
         private KeyCode _load = KeyCode.V;
 
+        private KeyCode _left = KeyCode.A;
+        private KeyCode _right = KeyCode.D;
+
         float rotationX = 0;
         float rotationY = 0;
 
@@ -26,6 +31,7 @@ namespace Shooter
             _playerAnimation = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Animator>();
             _camera = Camera.main.GetComponent<Animator>();
             _player = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Transform>();
+            _cellPointUI = GameObject.FindObjectOfType<CellPoint>();
         }
         
         public void OnUpdate()
@@ -39,16 +45,39 @@ namespace Shooter
                 _playerAnimation.SetBool("forward", false);
             }
 
+            _playerAnimation.SetFloat("Blend", Input.GetAxis("Horizontal"));
+
+            //{
+            //    _playerAnimation.SetBool("Move Left", true);
+            //}
+            //else if (Input.GetKeyUp(_left))
+            //{
+            //    _playerAnimation.SetBool("Move Left", false);
+            //}
+
+            if (Input.GetKeyDown(_right))
+            {
+                _playerAnimation.SetBool("Move Right", true);
+            }
+            else if (Input.GetKeyUp(_right))
+            {
+                _playerAnimation.SetBool("Move Right", false);
+            }
+
             if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 _camera.SetBool("IsShooting", true);
                 _playerAnimation.SetBool("Aiming", true);
+                _cellPointUI.Canvas.enabled = true;
+                _playerController.Aiming(true);
                 Debug.Log("On");
             }
             else if (Input.GetKeyUp(KeyCode.Mouse1))
             {
                 _camera.SetBool("IsShooting", false);
                 _playerAnimation.SetBool("Aiming", false);
+                _cellPointUI.Canvas.enabled = false;
+                _playerController.Aiming(false);
                 Debug.Log("Off");
             }
 
