@@ -1,4 +1,5 @@
-﻿
+﻿using UnityEngine;
+
 namespace Shooter
 {
     public class Firearms : WeaponBase
@@ -13,6 +14,10 @@ namespace Shooter
             }    
         }
 
+        private void Update()
+        {
+            transform.localRotation = Camera.main.transform.localRotation;
+        }
         public override void StopFire()
         {
         }
