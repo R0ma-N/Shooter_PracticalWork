@@ -23,7 +23,6 @@ namespace Shooter
         private KeyCode _right = KeyCode.D;
 
         float rotationX = 0;
-        float rotationY = 0;
 
         public InputController()
         {
@@ -45,15 +44,14 @@ namespace Shooter
                 _playerAnimation.SetBool("forward", false);
             }
 
-            _playerAnimation.SetFloat("Blend", Input.GetAxis("Horizontal"));
-
-            //{
-            //    _playerAnimation.SetBool("Move Left", true);
-            //}
-            //else if (Input.GetKeyUp(_left))
-            //{
-            //    _playerAnimation.SetBool("Move Left", false);
-            //}
+            if (Input.GetKeyDown(_left))
+            {
+                _playerAnimation.SetBool("Move Left", true);
+            }
+            else if (Input.GetKeyUp(_left))
+            {
+                _playerAnimation.SetBool("Move Left", false);
+            }
 
             if (Input.GetKeyDown(_right))
             {
@@ -68,22 +66,19 @@ namespace Shooter
             {
                 _camera.SetBool("IsShooting", true);
                 _playerAnimation.SetBool("Aiming", true);
-                _cellPointUI.Canvas.enabled = true;
                 _playerController.Aiming(true);
-                Debug.Log("On");
+                _weaponController._activeWeapon.IsVisible(true);
             }
             else if (Input.GetKeyUp(KeyCode.Mouse1))
             {
                 _camera.SetBool("IsShooting", false);
                 _playerAnimation.SetBool("Aiming", false);
-                _cellPointUI.Canvas.enabled = false;
                 _playerController.Aiming(false);
-                Debug.Log("Off");
+                _weaponController._activeWeapon.IsVisible(false);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.Log("OKKK");
                 _playerAnimation.SetTrigger("Jump");
             }
 
@@ -116,25 +111,7 @@ namespace Shooter
             {
                 _saveDataRepository.Load();
             }
-
-
         }
 
-        private Quaternion ClampRotationAroundXAxis(Quaternion q)
-        {
-            q.x /= q.w;
-            q.y /= q.w;
-            q.z /= q.w;
-            q.w = 1.0f;
-
-            float angleX = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.x);
-
-            //angleX = Mathf.Clamp(angleX, MinimumX, MaximumX);
-            angleX = Mathf.Clamp(angleX, -90, 90);
-
-            q.x = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleX);
-
-            return q;
-        }
     }
 }

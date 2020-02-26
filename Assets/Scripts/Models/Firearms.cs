@@ -11,12 +11,7 @@ namespace Shooter
                 var tempAmmunation = Instantiate(Ammunition, _barrel.position, _barrel.rotation);
                 tempAmmunation.AddForce(_barrel.forward * _force);
                 BulletsCount--;
-            }    
-        }
-
-        private void Update()
-        {
-            transform.localRotation = Camera.main.transform.localRotation;
+            }
         }
         public override void StopFire()
         {

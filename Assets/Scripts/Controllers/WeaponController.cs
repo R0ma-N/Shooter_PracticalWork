@@ -4,7 +4,7 @@ namespace Shooter
 {
     public class WeaponController : BaseController, IOnUpdate
     {
-        private WeaponBase _activeWeapon;
+        public WeaponBase _activeWeapon;
         private Timer _timer;
         private KeyCode _fire = KeyCode.Mouse0;
         private KeyCode _reload = KeyCode.R;
@@ -16,6 +16,7 @@ namespace Shooter
             _activeWeapon = Inventory.Weapons[0];
             _playerAnimation = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Animator>();
             _timer = new Timer();
+            _activeWeapon.IsVisible(false);
             //WeaponBase.GotNewWeapon.AddListener(NewWeapon);
         }
 
