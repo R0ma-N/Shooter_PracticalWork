@@ -4,9 +4,9 @@ namespace Shooter
 {
     public abstract class BaseController
     {
+        protected bool IsActive;
         protected Inventory Inventory = new Inventory();
         protected UIInterface UIInterface = new UIInterface();
-        protected bool IsActive;
 
         public virtual void On()
         {

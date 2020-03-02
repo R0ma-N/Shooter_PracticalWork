@@ -5,7 +5,7 @@ namespace Shooter
 {
     public class FlashLightController: BaseController , IOnInitialize, IOnUpdate
     {
-        private FlashLightModel _flashLight;
+        public FlashLightModel _flashLight;
         private BatteryCharge _batteryUI;
         private Timer _timer;
 

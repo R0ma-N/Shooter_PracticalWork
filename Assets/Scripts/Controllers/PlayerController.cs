@@ -18,7 +18,12 @@ namespace Shooter
 
         public void Aiming(bool state)
         {
-            _playerModel.ikActive = state;
+            _playerModel.ikActiveFire = state;
+        }
+
+        public void Lighting(bool state)
+        {
+            _playerModel.ikActiveLight = state;
         }
 
         public void Move(Direction move)

@@ -94,6 +94,11 @@ namespace Shooter
             if (Input.GetKeyDown(_activeFlashLight))
             {
                 _flashLightController.Switch();
+                bool isOn = _flashLightController._flashLight.IsOn;
+                _playerAnimation.SetBool("HandLightOn", isOn);
+                _camera.SetBool("IsShooting", isOn);
+                _playerController.Lighting(isOn);
+                Debug.Log(isOn);
             }
 
             if (Input.GetKeyDown(_cancel))

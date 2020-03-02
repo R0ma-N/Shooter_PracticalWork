@@ -5,10 +5,20 @@ namespace Shooter
 {
     public class BulletModel : Ammunition
     {
+        private ParticleSystem _explosion;
+        private TrailRenderer _trailRenderer;
+        private Rigidbody _rigidbody;
+        private MeshRenderer _meshRenderer;
+        
         protected override void Awake()
         {
             base.Awake();
             Destroy(gameObject, _timeToDestruct);
+            _explosion = GetComponentInChildren<ParticleSystem>();
+            _trailRenderer = GetComponent<TrailRenderer>();
+            _rigidbody = GetComponent<Rigidbody>();
+            _meshRenderer = GetComponent<MeshRenderer>();
+            _explosion.Stop();
         }
 
         public void OnCollisionEnter(Collision collision)
@@ -18,8 +28,15 @@ namespace Shooter
                 damageable.getDamage(_Damage);
                 Debug.Log("CollissionDamag");
             }
+
+            if (collision.collider)
+            {
+            }
             Debug.Log(collision.collider.name);
-            Destroy(gameObject);
+            _trailRenderer.enabled = false;
+            _rigidbody.velocity = new Vector3(0, 0, 0);
+            _explosion.Play();
+            Destroy(gameObject,0.7f);
         }
     }
 }
