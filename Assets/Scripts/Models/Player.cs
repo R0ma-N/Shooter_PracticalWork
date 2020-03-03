@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 namespace Shooter
 {
@@ -13,6 +14,9 @@ namespace Shooter
         public Transform rightHandObj = null;
         public Transform leftHandObj = null;
         public Transform lookObj = null;
+
+        [SerializeField] private PostProcessProfile _pprofile;
+        public ColorGrading _colorGrading;
 
         void Start()
         {

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8203852304386112527
+--- !u!114 &-7871987674226999214
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -18,10 +18,10 @@ MonoBehaviour:
     value: 1
   shutterAngle:
     overrideState: 1
-    value: 96
+    value: 360
   sampleCount:
     overrideState: 1
-    value: 10
+    value: 32
 --- !u!114 &-3101739862151636714
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -87,7 +87,7 @@ MonoBehaviour:
   - {fileID: 7438191260963979075}
   - {fileID: 429000589265294473}
   - {fileID: 6042779804009702631}
-  - {fileID: -8203852304386112527}
+  - {fileID: -7871987674226999214}
 --- !u!114 &429000589265294473
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -178,7 +178,7 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 1
-    value: 4
+    value: 80.142136
   tint:
     overrideState: 0
     value: 0
