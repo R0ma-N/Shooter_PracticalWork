@@ -9577,6 +9577,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc25196b9c1e864aa9b408fa7edb973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Scenes:
+    MainMenu:
+      sceneAsset: {fileID: 102900000, guid: ea59a80240d206c4697d6a3f884c655d, type: 3}
+    Game:
+      sceneAsset: {fileID: 102900000, guid: 84bfd82367863044bb450893ae4b0046, type: 3}
 --- !u!4 &1549938942
 Transform:
   m_ObjectHideFlags: 0

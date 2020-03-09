@@ -1,10 +1,19 @@
-﻿
+﻿using Helper;
 using UnityEngine;
 
 namespace Shooter
 {
     public class Main : MonoBehaviour
     {
+        [System.Serializable]
+        public struct SceneDate
+        {
+            public SceneField MainMenu;
+            public SceneField Game;
+        }
+
+        public SceneDate Scenes;
+
         //private PlayerController _playerController;
         private InputController _inputController;
         private FlashLightController _flashLightController;

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Shooter
 {
@@ -105,6 +106,8 @@ namespace Shooter
             {
                 _flashLightController.Off();
                 _weaponController.Off();
+                Cursor.lockState = CursorLockMode.None;
+                SceneManager.LoadScene(0);
             }
 
             if (Input.GetKeyDown(_save))
