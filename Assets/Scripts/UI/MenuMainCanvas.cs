@@ -5,16 +5,17 @@ using UnityEngine.UI;
 
 public class MenuMainCanvas : MonoBehaviour
 {
-	public Text[] texts;
+	public Text[] Texts;
 	public int CurrentLanguage;
 
 	private void Awake()
 	{
-		texts = GetComponentsInChildren<Text>();
+		Texts = GetComponentsInChildren<Text>();
 	}
 
-	public void GetTextComponents()
+	public Text[] GetTextComponents()
 	{
-		texts = GetComponentsInChildren<Text>();
+		Texts = GetComponentsInChildren<Text>();
+		return Texts;
 	}
 }

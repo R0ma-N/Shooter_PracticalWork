@@ -93,4 +93,11 @@ public class PanelManager : MonoBehaviour {
 	{
 		EventSystem.current.SetSelectedGameObject(go);
 	}
+
+	public void GetName()
+	{
+		string name;
+		name = transform.name;
+		Debug.Log(name);
+	}
 }

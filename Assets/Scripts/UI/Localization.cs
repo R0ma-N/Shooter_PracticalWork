@@ -34,9 +34,8 @@ public class Localization : MonoBehaviour
         "Lat"
     };
 
-    public string[] SettingsEnglish = new string[6]
+    public string[] SettingsEnglish = new string[5]
     {
-        "Eng",
         "Settings",
         "Gameplay",
         "Video",
@@ -44,9 +43,8 @@ public class Localization : MonoBehaviour
         "Back"
     };
 
-    public string[] SettingsRussian = new string[6]
+    public string[] SettingsRussian = new string[5]
     {
-        "Рус",
         "Настройки",
         "Игра",
         "Видео",
@@ -54,13 +52,99 @@ public class Localization : MonoBehaviour
         "Назад"
     };
 
-    public string[] SettingsLatin = new string[6]
+    public string[] SettingsLatin = new string[5]
     {
-        "Lat",
         "Occasus",
         "lusionis",
         "Video",
         "Sana",
         "Ante"
+    };
+
+    public string[] GameplayEnglish = new string[6]
+    {
+        "Gameplay",
+        "Dificulty",
+        "Movement Speed",
+        "Mouse Scroll",
+        "Perma Death",
+        "Close"
+    };
+
+    public string[] GameplayRussian = new string[6]
+    {
+        "Игра",
+        "Сложность",
+        "Скорость",
+        "Мышь",
+        "Вечная Смерть",
+        "Закрыть"
+    };
+
+    public string[] GameplayLatin = new string[6]
+    {
+        "lusionis",
+        "Difficultas",
+        "Minuit Motum Dimidia",
+        "Mus Libro",
+        "Perma Mors",
+        "Prope"
+    };
+
+    public string[] VideoEnglish = new string[6]
+{
+        "Video",
+        "Quality",
+        "View Distance",
+        "Anti-Aliasing",
+        "AO",
+        "Close"
+};
+
+    public string[] VideoRussian = new string[6]
+    {
+        "Видео",
+        "Качество",
+        "Обзор",
+        "Сглаживание",
+        "АО",
+        "Закрыть"
+    };
+
+    public string[] VideoLatin = new string[6]
+    {
+        "Video",
+        "Qualis",
+        "View Longius",
+        "Delenimenta",
+        "AO",
+        "Prope"
+    };
+
+    public string[] AudioEnglish = new string[5]
+    {
+        "Audio",
+        "Master Volume",
+        "Music",
+        "SFX",
+        "Close"
+    };
+
+    public string[] AudioRussian = new string[5]
+    {
+        "Аудио",
+        "Громкость",
+        "Музыка",
+        "Эффекты",
+        "Закрыть"
+    };
+
+    public string[] AudioLatin = new string[5]
+    {
+        "Sana",
+        "Volubilis",
+        "Musica",
+        "Effectus",
+        "Prope"
     };
 }

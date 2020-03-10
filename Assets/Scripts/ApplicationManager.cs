@@ -5,23 +5,21 @@ using System.Collections;
 
 public class ApplicationManager : MonoBehaviour 
 {
-	private int LanguageIndex = 0;
-	private MenuMainCanvas _canvas;
+	public int LanguageIndex = 0;
+	public string MenuState;
+	public string MenuUnderState;
+
 	private Text[] _MainMenuTextFields;
 	private Text[] _SettingsMenuTextFields;
+	private Text[] _gameSettingsTextFields;
 	private string[] _LocalizationText;
+
 	private Localization localization;
 
 	private void Awake()
 	{
-		_canvas = FindObjectOfType<MenuMainCanvas>();
-		_MainMenuTextFields = _canvas.texts;
+		_MainMenuTextFields = FindObjectOfType<MenuMainCanvas>().Texts;
 		localization = new Localization();
-	}
-
-	private void Start()
-	{
-		print(_SettingsMenuTextFields.Length);
 	}
 
 	public void Quit () 
@@ -42,65 +40,74 @@ public class ApplicationManager : MonoBehaviour
 	{
 		LanguageIndex++;
 		if (LanguageIndex == 3) LanguageIndex = 0;
-		print(LanguageIndex);
 
-		if(LanguageIndex == 0)
+		if (LanguageIndex == 0)
 		{
-			_LocalizationText = localization.MainMenuEnglish;
-			for (int i = 0; i < _MainMenuTextFields.Length; i++)
-			{
-				_MainMenuTextFields[i].text = _LocalizationText[i];
-			}
+			ChangeLanguageInLocal(_MainMenuTextFields, localization.MainMenuEnglish);
 		}
 		else if (LanguageIndex == 1)
 		{
-			_LocalizationText = localization.MainMenuRussian;
-			for (int i = 0; i < _MainMenuTextFields.Length; i++)
-			{
-				_MainMenuTextFields[i].text = _LocalizationText[i];
-			}
+			ChangeLanguageInLocal(_MainMenuTextFields, localization.MainMenuRussian);
 		}
 		else if (LanguageIndex == 2)
 		{
-			_LocalizationText = localization.MainMenuLatin;
-			for (int i = 0; i < _MainMenuTextFields.Length; i++)
-			{
-				_MainMenuTextFields[i].text = _LocalizationText[i];
-			}
-		}
-
-		_SettingsMenuTextFields = FindObjectOfType<SettingsLocalization>().TextFields;
-		if (_SettingsMenuTextFields.Length != 0)
-		{
-			_canvas.GetTextComponents();
-			print(_canvas.texts.Length);
-
-			if (LanguageIndex == 0)
-			{
-				_LocalizationText = localization.SettingsEnglish;
-				for (int i = 0; i < _canvas.texts.Length; i++)
-				{
-					_canvas.texts[i].text = _LocalizationText[i];
-				}
-			}
-			else if (LanguageIndex == 1)
-			{
-				_LocalizationText = localization.SettingsRussian;
-				for (int i = 0; i < _canvas.texts.Length; i++)
-				{
-					_canvas.texts[i].text = _LocalizationText[i];
-				}
-			}
-			else if (LanguageIndex == 2)
-			{
-				_LocalizationText = localization.SettingsLatin;
-				for (int i = 0; i < _canvas.texts.Length; i++)
-				{
-					_canvas.texts[i].text = _LocalizationText[i];
-				}
-			}
-
+			ChangeLanguageInLocal(_MainMenuTextFields, localization.MainMenuLatin);
 		}
 	}
 
+	private void ChangeLanguageInLocal(Text[] menuFields, string[] localization)
+	{
+		for (int i = 0; i < localization.Length; i++)
+		{
+			menuFields[i].text = localization[i];
+		}
+	}
+
+	public void GamePlay()
+	{
+		_gameSettingsTextFields = FindObjectOfType<GameSettingsMenu>().Texts;
+		
+		if (LanguageIndex == 0)
+		{
+			ChangeLanguageInLocal(_gameSettingsTextFields, localization.GameplayEnglish);
+		}
+		else if (LanguageIndex == 1)
+		{
+			ChangeLanguageInLocal(_gameSettingsTextFields, localization.GameplayRussian);
+		}
+		else if (LanguageIndex == 2)
+		{
+			ChangeLanguageInLocal(_gameSettingsTextFields, localization.GameplayLatin);
+		}
+	}
+
+	public void Video()
+	{
+		var videoMenuTextFields = FindObjectOfType<MenuVideo>().Texts;
+		string[] loc = new string[6];
+		if (LanguageIndex == 0) { loc = localization.VideoEnglish; }
+		else if (LanguageIndex == 1) { loc = localization.VideoRussian; }
+		else if (LanguageIndex == 2) { loc = localization.VideoLatin; }
+		ChangeLanguageInLocal(videoMenuTextFields, loc);
+	}
+
+	public void Audio()
+	{
+		var audioMenuTextFields = FindObjectOfType<MenuAudio>().Texts;
+		string[] loc = new string[5];
+		if (LanguageIndex == 0) { loc = localization.AudioEnglish; }
+		else if (LanguageIndex == 1) { loc = localization.AudioRussian; }
+		else if (LanguageIndex == 2) { loc = localization.AudioLatin; }
+		ChangeLanguageInLocal(audioMenuTextFields, loc);
+	}
+
+	public void Settings()
+	{
+		_SettingsMenuTextFields = FindObjectOfType<SettingsMenuCanvas>().Texts;
+		string[] loc = new string[5];
+		if (LanguageIndex == 0) { loc = localization.SettingsEnglish; }
+		else if (LanguageIndex == 1) { loc = localization.SettingsRussian; }
+		else if (LanguageIndex == 2) { loc = localization.SettingsLatin; }
+		ChangeLanguageInLocal(_SettingsMenuTextFields, loc);
+	}
 }
