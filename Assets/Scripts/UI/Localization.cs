@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Localization : MonoBehaviour
+public class Localization
 {
     public string[] MainMenuEnglish = new string[6]
     {
@@ -92,14 +92,14 @@ public class Localization : MonoBehaviour
     };
 
     public string[] VideoEnglish = new string[6]
-{
+    {
         "Video",
         "Quality",
         "View Distance",
         "Anti-Aliasing",
         "AO",
         "Close"
-};
+    };
 
     public string[] VideoRussian = new string[6]
     {

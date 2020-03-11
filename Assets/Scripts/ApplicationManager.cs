@@ -18,8 +18,8 @@ public class ApplicationManager : MonoBehaviour
 
 	private void Awake()
 	{
-		_MainMenuTextFields = FindObjectOfType<MenuMainCanvas>().Texts;
 		localization = new Localization();
+		DontDestroyOnLoad(this.gameObject);
 	}
 
 	public void Quit () 
@@ -31,6 +31,11 @@ public class ApplicationManager : MonoBehaviour
 		#endif
 	}
 
+	private void Start()
+	{
+		Debug.Log("OK");
+		_MainMenuTextFields = FindObjectOfType<MenuMainCanvas>().Texts;
+	}
 	public void StartGame()
 	{
 		SceneManager.LoadScene(1);
