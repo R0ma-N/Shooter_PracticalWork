@@ -5,15 +5,6 @@ namespace Shooter
 {
     public class Main : MonoBehaviour
     {
-        [System.Serializable]
-        public struct SceneDate
-        {
-            public SceneField MainMenu;
-            public SceneField Game;
-        }
-
-        public SceneDate Scenes;
-
         //private PlayerController _playerController;
         private InputController _inputController;
         private FlashLightController _flashLightController;
@@ -29,7 +20,7 @@ namespace Shooter
             _flashLightController = new FlashLightController();
             _weaponController = new WeaponController();
             _enemyController = new EnemyController();
-            
+
             _controllersInit = new IOnInitialize[2];
             _controllersInit[0] = _flashLightController;
             _controllersInit[1] = _enemyController;
@@ -40,7 +31,14 @@ namespace Shooter
             _controllersUpdate[1] = _flashLightController;
             _controllersUpdate[2] = _weaponController;
             _controllersUpdate[3] = _enemyController;
+
+            var els = GameObject.FindObjectsOfType<Main>();
+            if (els.Length > 1)
+            {
+                Destroy(this.gameObject);
+            }
         }
+
         void Start()
         {
             for (int i = 0; i < _controllersInit.Length; i++)

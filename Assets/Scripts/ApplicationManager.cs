@@ -3,116 +3,146 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class ApplicationManager : MonoBehaviour 
+namespace Shooter
 {
-	public int LanguageIndex = 0;
-	public string MenuState;
-	public string MenuUnderState;
-
-	private Text[] _MainMenuTextFields;
-	private Text[] _SettingsMenuTextFields;
-	private Text[] _gameSettingsTextFields;
-	private string[] _LocalizationText;
-
-	private Localization localization;
-
-	private void Awake()
+	public class ApplicationManager : MonoBehaviour
 	{
-		localization = new Localization();
-		DontDestroyOnLoad(this.gameObject);
-	}
+		public int LanguageIndex;
 
-	public void Quit () 
-	{
-		#if UNITY_EDITOR
-		UnityEditor.EditorApplication.isPlaying = false;
-		#else
-		Application.Quit();
-		#endif
-	}
+		private Text[] _MainMenuTextFields;
+		private Text[] _SettingsMenuTextFields;
+		private Text[] _gameSettingsTextFields;
+		private MenuMainCanvas _menuMainCanvas;
+		private string[] _LocalizationText;
 
-	private void Start()
-	{
-		Debug.Log("OK");
-		_MainMenuTextFields = FindObjectOfType<MenuMainCanvas>().Texts;
-	}
-	public void StartGame()
-	{
-		SceneManager.LoadScene(1);
-	}
+		private Localization localization;
 
-	public void ChangeLanguage()
-	{
-		LanguageIndex++;
-		if (LanguageIndex == 3) LanguageIndex = 0;
-
-		if (LanguageIndex == 0)
+		public void Awake()
 		{
-			ChangeLanguageInLocal(_MainMenuTextFields, localization.MainMenuEnglish);
-		}
-		else if (LanguageIndex == 1)
-		{
-			ChangeLanguageInLocal(_MainMenuTextFields, localization.MainMenuRussian);
-		}
-		else if (LanguageIndex == 2)
-		{
-			ChangeLanguageInLocal(_MainMenuTextFields, localization.MainMenuLatin);
-		}
-	}
+			Debug.Log("Awake");
+			localization = new Localization();
 
-	private void ChangeLanguageInLocal(Text[] menuFields, string[] localization)
-	{
-		for (int i = 0; i < localization.Length; i++)
-		{
-			menuFields[i].text = localization[i];
-		}
-	}
+			var els = GameObject.FindObjectsOfType<ApplicationManager>();
+			if (els.Length > 1)
+			{
+				Destroy(this.gameObject);
+			}
 
-	public void GamePlay()
-	{
-		_gameSettingsTextFields = FindObjectOfType<GameSettingsMenu>().Texts;
+			DontDestroyOnLoad(this.gameObject);
+		}
+
+		private void Start()
+		{
+			_menuMainCanvas = FindObjectOfType<MenuMainCanvas>();
+			_MainMenuTextFields = _menuMainCanvas.Texts;
+
+			LanguageIndex = 2;
+
+			if (LanguageIndex == 0)
+			{
+				ChangeLanguageInLocal(_MainMenuTextFields, localization.MainMenuEnglish);
+			}
+			else if (LanguageIndex == 1)
+			{
+				ChangeLanguageInLocal(_MainMenuTextFields, localization.MainMenuRussian);
+			}
+			else if (LanguageIndex == 2)
+			{
+				ChangeLanguageInLocal(_MainMenuTextFields, localization.MainMenuLatin);
+			}
+		}
+
+		public void Quit () 
+		{
+			#if UNITY_EDITOR
+			UnityEditor.EditorApplication.isPlaying = false;
+			#else
+			Application.Quit();
+			#endif
+		}
+
+		public void StartGame()
+		{
+			localization.TempLanguageIndex = 5;
+			SceneManager.LoadScene(1);
+		}
+
+		public void ChangeLanguage()
+		{
+			LanguageIndex++;
+			if (LanguageIndex == 3) LanguageIndex = 0;
+
+			localization = new Localization();
+			_MainMenuTextFields = FindObjectOfType<MenuMainCanvas>().Texts;
+
+			if (LanguageIndex == 0)
+			{
+				ChangeLanguageInLocal(_MainMenuTextFields, localization.MainMenuEnglish);
+			}
+			else if (LanguageIndex == 1)
+			{
+				ChangeLanguageInLocal(_MainMenuTextFields, localization.MainMenuRussian);
+			}
+			else if (LanguageIndex == 2)
+			{
+				ChangeLanguageInLocal(_MainMenuTextFields, localization.MainMenuLatin);
+			}
+		}
+
+		private void ChangeLanguageInLocal(Text[] menuFields, string[] localization)
+		{
+			for (int i = 0; i < localization.Length; i++)
+			{
+				menuFields[i].text = localization[i];
+			}
+		}
+
+		public void GamePlay()
+		{
+			_gameSettingsTextFields = FindObjectOfType<GameSettingsMenu>().Texts;
 		
-		if (LanguageIndex == 0)
-		{
-			ChangeLanguageInLocal(_gameSettingsTextFields, localization.GameplayEnglish);
+			if (LanguageIndex == 0)
+			{
+				ChangeLanguageInLocal(_gameSettingsTextFields, localization.GameplayEnglish);
+			}
+			else if (LanguageIndex == 1)
+			{
+				ChangeLanguageInLocal(_gameSettingsTextFields, localization.GameplayRussian);
+			}
+			else if (LanguageIndex == 2)
+			{
+				ChangeLanguageInLocal(_gameSettingsTextFields, localization.GameplayLatin);
+			}
 		}
-		else if (LanguageIndex == 1)
+
+		public void Video()
 		{
-			ChangeLanguageInLocal(_gameSettingsTextFields, localization.GameplayRussian);
+			var videoMenuTextFields = FindObjectOfType<MenuVideo>().Texts;
+			string[] loc = new string[6];
+			if (LanguageIndex == 0) { loc = localization.VideoEnglish; }
+			else if (LanguageIndex == 1) { loc = localization.VideoRussian; }
+			else if (LanguageIndex == 2) { loc = localization.VideoLatin; }
+			ChangeLanguageInLocal(videoMenuTextFields, loc);
 		}
-		else if (LanguageIndex == 2)
+
+		public void Audio()
 		{
-			ChangeLanguageInLocal(_gameSettingsTextFields, localization.GameplayLatin);
+			var audioMenuTextFields = FindObjectOfType<MenuAudio>().Texts;
+			string[] loc = new string[5];
+			if (LanguageIndex == 0) { loc = localization.AudioEnglish; }
+			else if (LanguageIndex == 1) { loc = localization.AudioRussian; }
+			else if (LanguageIndex == 2) { loc = localization.AudioLatin; }
+			ChangeLanguageInLocal(audioMenuTextFields, loc);
 		}
-	}
 
-	public void Video()
-	{
-		var videoMenuTextFields = FindObjectOfType<MenuVideo>().Texts;
-		string[] loc = new string[6];
-		if (LanguageIndex == 0) { loc = localization.VideoEnglish; }
-		else if (LanguageIndex == 1) { loc = localization.VideoRussian; }
-		else if (LanguageIndex == 2) { loc = localization.VideoLatin; }
-		ChangeLanguageInLocal(videoMenuTextFields, loc);
-	}
-
-	public void Audio()
-	{
-		var audioMenuTextFields = FindObjectOfType<MenuAudio>().Texts;
-		string[] loc = new string[5];
-		if (LanguageIndex == 0) { loc = localization.AudioEnglish; }
-		else if (LanguageIndex == 1) { loc = localization.AudioRussian; }
-		else if (LanguageIndex == 2) { loc = localization.AudioLatin; }
-		ChangeLanguageInLocal(audioMenuTextFields, loc);
-	}
-
-	public void Settings()
-	{
-		_SettingsMenuTextFields = FindObjectOfType<SettingsMenuCanvas>().Texts;
-		string[] loc = new string[5];
-		if (LanguageIndex == 0) { loc = localization.SettingsEnglish; }
-		else if (LanguageIndex == 1) { loc = localization.SettingsRussian; }
-		else if (LanguageIndex == 2) { loc = localization.SettingsLatin; }
-		ChangeLanguageInLocal(_SettingsMenuTextFields, loc);
+		public void Settings()
+		{
+			_SettingsMenuTextFields = FindObjectOfType<SettingsMenuCanvas>().Texts;
+			string[] loc = new string[5];
+			if (LanguageIndex == 0) { loc = localization.SettingsEnglish; }
+			else if (LanguageIndex == 1) { loc = localization.SettingsRussian; }
+			else if (LanguageIndex == 2) { loc = localization.SettingsLatin; }
+			ChangeLanguageInLocal(_SettingsMenuTextFields, loc);
+		}
 	}
 }
