@@ -13,7 +13,6 @@ namespace Shooter
         private Animator _playerAnimation;
         private Animator _camera;
         private Transform _player;
-        private ApplicationManager _applicationManager;
         private float sensitivity = 4;
 
         private KeyCode _activeFlashLight = KeyCode.F;
@@ -33,7 +32,6 @@ namespace Shooter
             _camera = Camera.main.GetComponent<Animator>();
             _player = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Transform>();
             _cellPointUI = GameObject.FindObjectOfType<CellPoint>();
-            _applicationManager = GameObject.FindObjectOfType<ApplicationManager>();
         }
         
         public void OnUpdate()

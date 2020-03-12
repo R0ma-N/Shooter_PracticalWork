@@ -24,11 +24,13 @@ namespace Shooter
             if(other.CompareTag(TagManager.PLAYER))
             {
                 _isEnter = true;
+                print("OOOOOOO" + _isEnter);
             }
         }
 
         void Update()
         {
+            print("OOOOOOO" + _isEnter);
             if (_isEnter & _colorGrading.temperature.value < 80)
             {
                 _colorGrading.temperature.value += (Time.deltaTime*20);

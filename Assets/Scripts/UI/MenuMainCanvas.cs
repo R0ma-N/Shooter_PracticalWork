@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Shooter
+public class MenuMainCanvas : MonoBehaviour
 {
-	public class MenuMainCanvas : MonoBehaviour
-	{
-		public Text[] Texts;
+	public Text[] Texts;
 
-		public void Awake()
-		{
-			Texts = GetComponentsInChildren<Text>();
-		}
+	private void Awake()
+	{
+		Texts = GetComponentsInChildren<Text>();
 	}
 }
