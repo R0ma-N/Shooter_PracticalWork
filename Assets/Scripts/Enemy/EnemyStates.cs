@@ -12,7 +12,6 @@ namespace Shooter
         public EnemyStates()
         {
             _patrolPoints = Object.FindObjectOfType<PatrolPoints>().Points;
-            Debug.Log($"StatesConst {_patrolPoints.Length}");
         }
 
         public void Patrol(Enemy enemy)

@@ -4,7 +4,7 @@ namespace Shooter
 {
     public class Firearms : WeaponBase
     {
-        private ParticleSystem _explosion;
+        private ParticleSystem _explosion = null;
 
         protected override void Awake()
         {

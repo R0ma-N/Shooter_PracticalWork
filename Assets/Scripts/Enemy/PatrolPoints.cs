@@ -11,7 +11,6 @@ namespace Shooter
         private void Awake()
         {
             Points = GetComponentsInChildren<Transform>();
-            Debug.Log(Points.Length);
         }
     }
 }

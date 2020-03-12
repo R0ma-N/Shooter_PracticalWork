@@ -4,16 +4,47 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PanelManager : MonoBehaviour {
+public class PanelManager : MonoBehaviour 
+{
 
 	public Animator initiallyOpen;
 
 	private int m_OpenParameterId;
 	private Animator m_Open;
 	private GameObject m_PreviouslySelected;
+	private ApplicationManager _applicationManager;
 
 	const string k_OpenTransitionName = "Open";
 	const string k_ClosedStateName = "Closed";
+
+	private void Awake()
+	{
+		_applicationManager = GameObject.FindObjectOfType<ApplicationManager>();
+	}
+
+	public void ChangeLanguage()
+	{
+		_applicationManager.ChangeLanguage();
+	}
+
+	public void StartGame()
+	{
+		_applicationManager.StartGame();
+	}
+
+	public void Settings()
+	{
+		_applicationManager.Settings();
+	}
+
+	public void Quit()
+	{
+		_applicationManager.Quit();
+	}
+
+	public void GamePlay() => _applicationManager.GamePlay();
+	public void Video() => _applicationManager.Video();
+	public void Audio() => _applicationManager.Audio(); 
 
 	public void OnEnable()
 	{

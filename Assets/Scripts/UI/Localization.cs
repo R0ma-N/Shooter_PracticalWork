@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Localization
 {
+    public int TemporaryLanguage;
+    
     public string[] MainMenuEnglish = new string[6]
     {
         "Menu",

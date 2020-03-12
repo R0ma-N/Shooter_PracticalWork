@@ -4,7 +4,7 @@ namespace Shooter
 {
     public class EnemyController : BaseController, IOnUpdate, IOnInitialize
     {
-        public Enemy _dron;
+        public Enemy _dron = null;
         private Transform _player;
         private EnemyStates _state = new EnemyStates();
         private ZoneOfDetect _zoneOfDetect;

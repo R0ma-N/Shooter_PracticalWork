@@ -5,7 +5,7 @@ using System.Collections;
 
 public class ApplicationManager : MonoBehaviour 
 {
-	public int LanguageIndex = 0;
+	public int LanguageIndex;
 	public string MenuState;
 	public string MenuUnderState;
 
@@ -13,12 +13,20 @@ public class ApplicationManager : MonoBehaviour
 	private Text[] _SettingsMenuTextFields;
 	private Text[] _gameSettingsTextFields;
 	private string[] _LocalizationText;
+	public int TempIndex;
 
 	private Localization localization;
 
 	private void Awake()
 	{
 		localization = new Localization();
+
+		var DontDestroyObjs = GameObject.FindObjectsOfType<ApplicationManager>();
+		if(DontDestroyObjs.Length > 1)
+		{
+			Destroy(this.gameObject);
+		}
+
 		DontDestroyOnLoad(this.gameObject);
 	}
 
@@ -33,18 +41,27 @@ public class ApplicationManager : MonoBehaviour
 
 	private void Start()
 	{
-		Debug.Log("OK");
 		_MainMenuTextFields = FindObjectOfType<MenuMainCanvas>().Texts;
+		localization.TemporaryLanguage = LanguageIndex;
+		print("AppMan start " + LanguageIndex);
+		print("AppMan start " + _MainMenuTextFields.Length + " " + localization.MainMenuEnglish.Length);
 	}
 	public void StartGame()
 	{
+		TempIndex = LanguageIndex;
 		SceneManager.LoadScene(1);
+		print("AppMan Load " + TempIndex);
 	}
 
 	public void ChangeLanguage()
 	{
 		LanguageIndex++;
 		if (LanguageIndex == 3) LanguageIndex = 0;
+
+		_MainMenuTextFields = FindObjectOfType<MenuMainCanvas>().Texts;
+		localization = new Localization();
+
+		print("AppMan OnChange " + LanguageIndex);
 
 		if (LanguageIndex == 0)
 		{
