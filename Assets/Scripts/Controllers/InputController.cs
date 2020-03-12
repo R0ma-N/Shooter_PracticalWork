@@ -12,6 +12,7 @@ namespace Shooter
         private CellPoint _cellPointUI;
         private Animator _playerAnimation;
         private Animator _camera;
+        private PanelManager _panelManager;
         private Transform _player;
         private float sensitivity = 4;
 
@@ -31,6 +32,7 @@ namespace Shooter
             _playerAnimation = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Animator>();
             _camera = Camera.main.GetComponent<Animator>();
             _player = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Transform>();
+            _panelManager = GameObject.FindObjectOfType<PanelManager>();
             _cellPointUI = GameObject.FindObjectOfType<CellPoint>();
         }
         
@@ -107,7 +109,8 @@ namespace Shooter
                 _flashLightController.Off();
                 _weaponController.Off();
                 Cursor.lockState = CursorLockMode.None;
-                SceneManager.LoadScene(0);
+                _panelManager.OpenPanel(_panelManager.Audio);
+                Off();
             }
 
             if (Input.GetKeyDown(_save))

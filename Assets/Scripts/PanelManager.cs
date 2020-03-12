@@ -8,6 +8,8 @@ public class PanelManager : MonoBehaviour
 {
 
 	public Animator initiallyOpen;
+	public Animator Audio;
+	public int io;
 
 	private int m_OpenParameterId;
 	private Animator m_Open;
@@ -44,7 +46,7 @@ public class PanelManager : MonoBehaviour
 
 	public void GamePlay() => _applicationManager.GamePlay();
 	public void Video() => _applicationManager.Video();
-	public void Audio() => _applicationManager.Audio(); 
+	//public void Audio() => _applicationManager.Audio(); 
 
 	public void OnEnable()
 	{
