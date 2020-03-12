@@ -4,12 +4,12 @@ namespace Shooter
 {
     public class Firearms : WeaponBase
     {
-        private ParticleSystem _explosion = null;
+        public ParticleSystem _explosion;
 
         protected override void Awake()
         {
             base.Awake();
-            _explosion = GetComponentInChildren<ParticleSystem>();
+            //_explosion = GetComponentInChildren<ParticleSystem>();
             _explosion.Stop();
         }
         

@@ -48,7 +48,6 @@ namespace Shooter
                 var controller = _controllersInit[i];
                 controller.OnStart();
             }
-            _weaponController.On();
         }
 
         void Update()

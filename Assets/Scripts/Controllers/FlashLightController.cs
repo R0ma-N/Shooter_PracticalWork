@@ -39,7 +39,7 @@ namespace Shooter
                 IncreaseCharge();
             }
         }
-        
+
         public override void On()
         {
             Switch(true);

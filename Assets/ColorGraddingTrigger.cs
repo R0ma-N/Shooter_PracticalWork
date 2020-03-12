@@ -7,15 +7,15 @@ namespace Shooter
 {
     public class ColorGraddingTrigger : MonoBehaviour
     {
+        public PostProcessProfile pprofile;
         private Player _player;
         private bool _isEnter;
-        [SerializeField] private PostProcessProfile _pprofile;
         private ColorGrading _colorGrading;
 
         void Start()
         {
             _player = FindObjectOfType<Player>();
-            _colorGrading = _pprofile.GetSetting<ColorGrading>();
+            _colorGrading = pprofile.GetSetting<ColorGrading>();
             _colorGrading.temperature.value = -100;
         }
 

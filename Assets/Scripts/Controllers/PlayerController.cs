@@ -11,7 +11,6 @@ namespace Shooter
 
         public PlayerController()
         {
-            On();
             _player = GameObject.FindGameObjectWithTag(TagManager.PLAYER);
             _playerModel = _player.GetComponent<Player>();
         }

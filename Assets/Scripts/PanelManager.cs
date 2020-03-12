@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
+using Shooter;
 using System.Collections.Generic;
 
 public class PanelManager : MonoBehaviour 
@@ -9,12 +10,12 @@ public class PanelManager : MonoBehaviour
 
 	public Animator initiallyOpen;
 	public Animator Audio;
-	public int io;
 
 	private int m_OpenParameterId;
 	private Animator m_Open;
 	private GameObject m_PreviouslySelected;
 	private ApplicationManager _applicationManager;
+	private InputController _inputController;
 
 	const string k_OpenTransitionName = "Open";
 	const string k_ClosedStateName = "Closed";
@@ -42,6 +43,11 @@ public class PanelManager : MonoBehaviour
 	public void Quit()
 	{
 		_applicationManager.Quit();
+	}
+
+	public void Close()
+	{
+		_inputController.IsActive = true;
 	}
 
 	public void GamePlay() => _applicationManager.GamePlay();

@@ -4,7 +4,7 @@ namespace Shooter
 {
     public abstract class BaseController
     {
-        protected bool IsActive;
+        public bool IsActive;
         protected Inventory Inventory = new Inventory();
         protected UIInterface UIInterface = new UIInterface();
 

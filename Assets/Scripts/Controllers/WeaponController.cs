@@ -2,89 +2,102 @@
 
 namespace Shooter
 {
-    public class WeaponController : BaseController, IOnUpdate
+    public class WeaponController :  IOnUpdate
     {
         public WeaponBase _activeWeapon;
+        public int test;
+        public bool Enabled = true;
         private Timer _timer;
         private KeyCode _fire = KeyCode.Mouse0;
         private KeyCode _reload = KeyCode.R;
         private int _index = 1;
         private Animator _playerAnimation;
-        
+        protected Inventory Inventory = new Inventory();
+        protected UIInterface UIInterface = new UIInterface();
+
         public WeaponController()
         {
             _activeWeapon = Inventory.Weapons[0];
             _playerAnimation = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Animator>();
             _timer = new Timer();
             _activeWeapon.IsVisible(false);
+            Debug.Log("Weapon Awake. Enabled " + Enabled);
             //WeaponBase.GotNewWeapon.AddListener(NewWeapon);
         }
 
         public void OnUpdate()
         {
-            
+            //Debug.Log("WeaponContr" + Enabled);
+            if (Enabled == false) return;
 
+            if (Enabled == true)
+            {
+                if (Input.GetKey(_fire))
+                {
+                    if(_activeWeapon.BulletsCount > 0)
+                    {
+                        _activeWeapon.Fire();
+                        _activeWeapon.IsReady = _timer.TimeIsUp(_activeWeapon.ShootInterval);
+                    }
+                    else return;
+                    Debug.Log("fire");
+                }
+                else if (Input.GetKeyUp(_fire))
+                {
+                    _activeWeapon.IsReady = true;
+                    _timer.DistTime = 0;
+                    Debug.Log("STOPfire");
+                    if (_activeWeapon is Flamethrower)
+                    {
+                        _activeWeapon.StopFire();
+                    }
+                }
 
-            if (Input.GetKey(_fire))
-            {
-                if(_activeWeapon.BulletsCount > 0)
+                float mv = Input.GetAxis("Mouse ScrollWheel");
+                if (mv > 0)
                 {
-                    _activeWeapon.Fire();
-                    _activeWeapon.IsReady = _timer.TimeIsUp(_activeWeapon.ShootInterval);
-                }
-                else return;
-                Debug.Log("fire");
-            }
-            else if (Input.GetKeyUp(_fire))
-            {
-                _activeWeapon.IsReady = true;
-                _timer.DistTime = 0;
-                Debug.Log("STOPfire");
-                if (_activeWeapon is Flamethrower)
-                {
-                    _activeWeapon.StopFire();
-                }
-            }
-
-            float mv = Input.GetAxis("Mouse ScrollWheel");
-            if (mv > 0)
-            {
-                Debug.Log(_index);
-                if (_index < Inventory.Weapons.Length - 1)
-                {
-                    ChangeWeapon(_index + 1);
-                    return;
-                }
+                    Debug.Log(_index);
+                    if (_index < Inventory.Weapons.Length - 1)
+                    {
+                        ChangeWeapon(_index + 1);
+                        return;
+                    }
                 
-                if (_index == Inventory.Weapons.Length - 1)
-                {
-                    ChangeWeapon(0);
+                    if (_index == Inventory.Weapons.Length - 1)
+                    {
+                        ChangeWeapon(0);
+                    }
                 }
-            }
             
-            if (mv < 0)
-            {
-                if (_index > 0)
+                if (mv < 0)
                 {
-                    ChangeWeapon(_index - 1);
-                    return;
+                    if (_index > 0)
+                    {
+                        ChangeWeapon(_index - 1);
+                        return;
+                    }
+
+                    if (_index == 0)
+                    {
+                        ChangeWeapon(Inventory.Weapons.Length - 1);
+                    }
                 }
 
-                if (_index == 0)
+                if (Input.GetKeyDown(_reload))
                 {
-                    ChangeWeapon(Inventory.Weapons.Length - 1);
+                    if (_activeWeapon.ClipsCount == 0)
+                        return;
+                    _activeWeapon.ClipsCount--;
+                    _activeWeapon.BulletsCount = _activeWeapon.BulletsInClip;
                 }
+
+                UIInterface.BulletsCount.TxtBullets.text = $"{_activeWeapon.ClipsCount}/{_activeWeapon.BulletsCount}  {Inventory.Weapons.Length}";
             }
 
-            if (Input.GetKeyDown(_reload))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (_activeWeapon.ClipsCount == 0)
-                    return;
-                _activeWeapon.ClipsCount--;
-                _activeWeapon.BulletsCount = _activeWeapon.BulletsInClip;
+                Disable();
             }
-
-            UIInterface.BulletsCount.TxtBullets.text = $"{_activeWeapon.ClipsCount}/{_activeWeapon.BulletsCount}  {Inventory.Weapons.Length}";
         }
 
         private void ChangeWeapon(int index)
@@ -102,5 +115,12 @@ namespace Shooter
             _activeWeapon.ClipsCount = _activeWeapon.ClipsMaxCount;
             _activeWeapon.BulletsCount = _activeWeapon.BulletsInClip;
         }
+
+        public void Disable()
+        {
+            Debug.Log("Disable " + Enabled);
+            Enabled = false;
+        }
+
     }
 }
