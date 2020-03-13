@@ -2,7 +2,7 @@
 
 namespace Shooter
 {
-    public class WeaponController :  IOnUpdate
+    public class WeaponController :  BaseController, IOnUpdate
     {
         public WeaponBase _activeWeapon;
         public int test;
@@ -11,14 +11,10 @@ namespace Shooter
         private KeyCode _fire = KeyCode.Mouse0;
         private KeyCode _reload = KeyCode.R;
         private int _index = 1;
-        private Animator _playerAnimation;
-        protected Inventory Inventory = new Inventory();
-        protected UIInterface UIInterface = new UIInterface();
 
         public WeaponController()
         {
             _activeWeapon = Inventory.Weapons[0];
-            _playerAnimation = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Animator>();
             _timer = new Timer();
             _activeWeapon.IsVisible(false);
             Debug.Log("Weapon Awake. Enabled " + Enabled);
@@ -27,10 +23,7 @@ namespace Shooter
 
         public void OnUpdate()
         {
-            //Debug.Log("WeaponContr" + Enabled);
-            if (Enabled == false) return;
-
-            if (Enabled == true)
+            if (IsActive)
             {
                 if (Input.GetKey(_fire))
                 {
@@ -96,7 +89,7 @@ namespace Shooter
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Disable();
+                Switch();
             }
         }
 
@@ -115,12 +108,5 @@ namespace Shooter
             _activeWeapon.ClipsCount = _activeWeapon.ClipsMaxCount;
             _activeWeapon.BulletsCount = _activeWeapon.BulletsInClip;
         }
-
-        public void Disable()
-        {
-            Debug.Log("Disable " + Enabled);
-            Enabled = false;
-        }
-
     }
 }

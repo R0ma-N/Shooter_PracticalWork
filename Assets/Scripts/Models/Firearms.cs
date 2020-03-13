@@ -22,9 +22,8 @@ namespace Shooter
                 _explosion.Play();
                 BulletsCount--;
             }
-
-            
         }
+
         public override void StopFire()
         {
         }

@@ -10,6 +10,7 @@ namespace Shooter
         private FlashLightController _flashLightController = new FlashLightController();
         private WeaponController _weaponController = new WeaponController();
         private PlayerController _playerController = new PlayerController();
+        private PauseScreen _pauseScreen;
         private SaveDataRepository _saveDataRepository = new SaveDataRepository();
         private CellPoint _cellPointUI;
         private Animator _playerAnimation;
@@ -17,6 +18,7 @@ namespace Shooter
         private PanelManager _panelManager;
         private Transform _player;
         private float sensitivity = 4;
+        private bool _isPaused;
 
         private KeyCode _activeFlashLight = KeyCode.F;
         private KeyCode _cancel = KeyCode.Escape;
@@ -36,6 +38,7 @@ namespace Shooter
             _player = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Transform>();
             _panelManager = GameObject.FindObjectOfType<PanelManager>();
             _cellPointUI = GameObject.FindObjectOfType<CellPoint>();
+            _pauseScreen = GameObject.FindObjectOfType<PauseScreen>();
             _pprofile = GameObject.FindObjectOfType<ColorGraddingTrigger>().pprofile;
             IsActive = true;
         }
@@ -115,9 +118,8 @@ namespace Shooter
             if (Input.GetKeyDown(_cancel))
             {
                 _flashLightController.Off();
-                Cursor.lockState = CursorLockMode.None;
-                _panelManager.OpenPanel(_panelManager.Audio);
-                IsActive = false;
+                
+                Switch();
             }
 
             if (Input.GetKeyDown(_save))
@@ -129,6 +131,27 @@ namespace Shooter
             {
                 _saveDataRepository.Load();
             }
+        }
+
+        private new void Switch()
+        {
+            if (!_isPaused)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                _panelManager.OpenPanel(_panelManager.Audio);
+                Time.timeScale = 0;
+                _isPaused = true;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                _panelManager.CloseCurrent();
+                Time.timeScale = 1;
+                _isPaused = false;
+            }
+
+            _pauseScreen.MakeDarkScreen(_isPaused);
+            base.Switch();
         }
 
     }
