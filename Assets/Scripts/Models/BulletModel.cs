@@ -9,6 +9,7 @@ namespace Shooter
         private TrailRenderer _trailRenderer;
         private Rigidbody _rigidbody;
         private MeshRenderer _meshRenderer;
+        private AudioSource _explotion;
         
         protected override void Awake()
         {
@@ -18,6 +19,8 @@ namespace Shooter
             _trailRenderer = GetComponent<TrailRenderer>();
             _rigidbody = GetComponent<Rigidbody>();
             _meshRenderer = GetComponent<MeshRenderer>();
+            TryGetComponent<AudioSource>(out AudioSource explotion);
+            _explotion = explotion;
             _explosion.Stop();
         }
 
@@ -36,6 +39,7 @@ namespace Shooter
             _trailRenderer.enabled = false;
             _rigidbody.velocity = new Vector3(0, 0, 0);
             _explosion.Play();
+            _explotion.Play();
             Destroy(gameObject,0.7f);
         }
     }

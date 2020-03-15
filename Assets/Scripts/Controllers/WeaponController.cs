@@ -1,24 +1,26 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Shooter
 {
     public class WeaponController :  BaseController, IOnUpdate
     {
-        public WeaponBase _activeWeapon;
-        public int test;
-        public bool Enabled = true;
+        public WeaponBase ActiveWeapon;
+        public UnityEvent WeaponChanged = new UnityEvent();
         private Timer _timer;
+        private int _index = 0;
         private KeyCode _fire = KeyCode.Mouse0;
         private KeyCode _reload = KeyCode.R;
-        private int _index = 1;
+        private MenuGamePause _pauseMenu;
 
         public WeaponController()
         {
-            _activeWeapon = Inventory.Weapons[0];
+            ActiveWeapon = Inventory.Weapons[0];
             _timer = new Timer();
-            _activeWeapon.IsVisible(false);
-            Debug.Log("Weapon Awake. Enabled " + Enabled);
-            //WeaponBase.GotNewWeapon.AddListener(NewWeapon);
+            ActiveWeapon.IsVisible(false);
+            _pauseMenu = GameObject.FindObjectOfType<MenuGamePause>();
+            IsActive = true;
+            _pauseMenu.PressedClose.AddListener(Switch);
         }
 
         public void OnUpdate()
@@ -27,22 +29,22 @@ namespace Shooter
             {
                 if (Input.GetKey(_fire))
                 {
-                    if(_activeWeapon.BulletsCount > 0)
+                    if(ActiveWeapon.BulletsCount > 0)
                     {
-                        _activeWeapon.Fire();
-                        _activeWeapon.IsReady = _timer.TimeIsUp(_activeWeapon.ShootInterval);
+                        ActiveWeapon.Fire();
+                        ActiveWeapon.IsReady = _timer.TimeIsUp(ActiveWeapon.ShootInterval);
                     }
                     else return;
                     Debug.Log("fire");
                 }
                 else if (Input.GetKeyUp(_fire))
                 {
-                    _activeWeapon.IsReady = true;
+                    ActiveWeapon.IsReady = true;
                     _timer.DistTime = 0;
                     Debug.Log("STOPfire");
-                    if (_activeWeapon is Flamethrower)
+                    if (ActiveWeapon is Flamethrower)
                     {
-                        _activeWeapon.StopFire();
+                        ActiveWeapon.StopFire();
                     }
                 }
 
@@ -78,13 +80,13 @@ namespace Shooter
 
                 if (Input.GetKeyDown(_reload))
                 {
-                    if (_activeWeapon.ClipsCount == 0)
+                    if (ActiveWeapon.ClipsCount == 0)
                         return;
-                    _activeWeapon.ClipsCount--;
-                    _activeWeapon.BulletsCount = _activeWeapon.BulletsInClip;
+                    ActiveWeapon.ClipsCount--;
+                    ActiveWeapon.BulletsCount = ActiveWeapon.BulletsInClip;
                 }
 
-                UIInterface.BulletsCount.TxtBullets.text = $"{_activeWeapon.ClipsCount}/{_activeWeapon.BulletsCount}  {Inventory.Weapons.Length}";
+                UIInterface.BulletsCount.TxtBullets.text = $"{ActiveWeapon.ClipsCount}/{ActiveWeapon.BulletsCount}  {Inventory.Weapons.Length}";
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -95,18 +97,20 @@ namespace Shooter
 
         private void ChangeWeapon(int index)
         {
-            if (_activeWeapon) _activeWeapon.IsVisible(false);
+            if (ActiveWeapon) ActiveWeapon.IsVisible(false);
             _index = index;
-            _activeWeapon = Inventory.Weapons[_index];
-            _activeWeapon.IsVisible(true);
+            ActiveWeapon = Inventory.Weapons[_index];
+            ActiveWeapon.IsVisible(true);
+            WeaponChanged?.Invoke();
+            Debug.Log(ActiveWeapon);
         }
 
         private void NewWeapon()
         {
             Inventory.AddNewWeapon();
             ChangeWeapon(Inventory.Weapons.Length - 1);
-            _activeWeapon.ClipsCount = _activeWeapon.ClipsMaxCount;
-            _activeWeapon.BulletsCount = _activeWeapon.BulletsInClip;
+            ActiveWeapon.ClipsCount = ActiveWeapon.ClipsMaxCount;
+            ActiveWeapon.BulletsCount = ActiveWeapon.BulletsInClip;
         }
     }
 }

@@ -6,9 +6,9 @@ namespace Shooter
 {
     public class WeaponDron : BaseObjectModel
     {
-        [SerializeField] private Transform _barrel;
-        [SerializeField] private Transform _barrel2;
-        [SerializeField] private Ammunition _ammunition;
+        [SerializeField] private Transform _barrel = null;
+        [SerializeField] private Transform _barrel2 = null;
+        [SerializeField] private Ammunition _ammunition = null;
         [SerializeField] private float _shootInterval = 0.5f;
         [SerializeField] private float _force = 999;
 

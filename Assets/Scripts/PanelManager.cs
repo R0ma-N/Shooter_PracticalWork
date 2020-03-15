@@ -22,6 +22,7 @@ public class PanelManager : MonoBehaviour
 
 	private void Awake()
 	{
+		//_inputController = new InputController();
 		_applicationManager = GameObject.FindObjectOfType<ApplicationManager>();
 	}
 
@@ -47,7 +48,8 @@ public class PanelManager : MonoBehaviour
 
 	public void Close()
 	{
-		_inputController.IsActive = true;
+		Debug.Log("PRESSED");
+		//_inputController.SwitchPause();
 	}
 
 	public void GamePlay() => _applicationManager.GamePlay();

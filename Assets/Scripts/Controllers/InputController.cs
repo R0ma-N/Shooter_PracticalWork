@@ -15,10 +15,13 @@ namespace Shooter
         private CellPoint _cellPointUI;
         private Animator _playerAnimation;
         private Animator _camera;
+        private Timer _timer;
         private PanelManager _panelManager;
         private Transform _player;
+        private MenuGamePause _pauseMenu;
         private float sensitivity = 4;
         private bool _isPaused;
+        private bool _isFlameThrower;
 
         private KeyCode _activeFlashLight = KeyCode.F;
         private KeyCode _cancel = KeyCode.Escape;
@@ -33,6 +36,7 @@ namespace Shooter
         public InputController()
         {
             Cursor.lockState = CursorLockMode.Locked;
+            _timer = new Timer();
             _playerAnimation = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Animator>();
             _camera = Camera.main.GetComponent<Animator>();
             _player = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Transform>();
@@ -40,14 +44,17 @@ namespace Shooter
             _cellPointUI = GameObject.FindObjectOfType<CellPoint>();
             _pauseScreen = GameObject.FindObjectOfType<PauseScreen>();
             _pprofile = GameObject.FindObjectOfType<ColorGraddingTrigger>().pprofile;
+            _pauseMenu = GameObject.FindObjectOfType<MenuGamePause>();
+            _weaponController.WeaponChanged.AddListener(isFlamethrower);
             IsActive = true;
         }
         
         public void OnUpdate()
         {
+
             if (IsActive)
             {
-
+                
                 if (Input.GetKeyDown(KeyCode.W))
                 {
                     _playerAnimation.SetBool("forward", true);
@@ -80,14 +87,14 @@ namespace Shooter
                     _camera.SetBool("IsShooting", true);
                     _playerAnimation.SetBool("Aiming", true);
                     _playerController.Aiming(true);
-                    _weaponController._activeWeapon.IsVisible(true);
+                    _weaponController.ActiveWeapon.IsVisible(true);
                 }
                 else if (Input.GetKeyUp(KeyCode.Mouse1))
                 {
                     _camera.SetBool("IsShooting", false);
                     _playerAnimation.SetBool("Aiming", false);
                     _playerController.Aiming(false);
-                    _weaponController._activeWeapon.IsVisible(false);
+                    _weaponController.ActiveWeapon.IsVisible(false);
                 }
 
                 if (Input.GetKeyDown(KeyCode.Space))
@@ -118,8 +125,8 @@ namespace Shooter
             if (Input.GetKeyDown(_cancel))
             {
                 _flashLightController.Off();
-                
-                Switch();
+                _pauseMenu.PressedClose.AddListener(SwitchPause);
+                SwitchPause();
             }
 
             if (Input.GetKeyDown(_save))
@@ -131,28 +138,45 @@ namespace Shooter
             {
                 _saveDataRepository.Load();
             }
+
+            if (Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0)
+            {
+                isFlamethrower();
+            }
         }
 
-        private new void Switch()
+        public void SwitchPause()
         {
             if (!_isPaused)
             {
                 Cursor.lockState = CursorLockMode.None;
-                _panelManager.OpenPanel(_panelManager.Audio);
-                Time.timeScale = 0;
+                Cursor.visible = true;
                 _isPaused = true;
+                Time.timeScale = 0;
             }
             else
             {
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 _panelManager.CloseCurrent();
-                Time.timeScale = 1;
                 _isPaused = false;
+                _pauseMenu.PressedClose.RemoveListener(SwitchPause);
+                Time.timeScale = 1;
             }
 
-            _pauseScreen.MakeDarkScreen(_isPaused);
             base.Switch();
+            _pauseMenu.Animator.SetBool("Open", _isPaused);
+            _pauseScreen.MakeDarkScreen(_isPaused);
         }
 
+        private void isFlamethrower()
+        {
+            if(_isFlameThrower == false)
+            {
+                _isFlameThrower = true;
+            }
+            else { _isFlameThrower = false; };
+            _playerAnimation.SetBool("FlameT", _isFlameThrower);
+        }
     }
 }

@@ -21,13 +21,13 @@ public class ApplicationManager : MonoBehaviour
 	{
 		localization = new Localization();
 
-		var DontDestroyObjs = GameObject.FindObjectsOfType<ApplicationManager>();
-		if(DontDestroyObjs.Length > 1)
-		{
-			Destroy(this.gameObject);
-		}
+		//var DontDestroyObjs = GameObject.FindObjectsOfType<ApplicationManager>();
+		//if(DontDestroyObjs.Length > 1)
+		//{
+		//	Destroy(this.gameObject);
+		//}
 
-		DontDestroyOnLoad(this.gameObject);
+		//DontDestroyOnLoad(this.gameObject);
 	}
 
 	public void Quit () 
