@@ -98,7 +98,7 @@ namespace Shooter
         private void ChangeWeapon(int index)
         {
             if (ActiveWeapon) ActiveWeapon.IsVisible(false);
-            _index = index;
+            _index = index - 1;
             ActiveWeapon = Inventory.Weapons[_index];
             ActiveWeapon.IsVisible(true);
             WeaponChanged?.Invoke();
