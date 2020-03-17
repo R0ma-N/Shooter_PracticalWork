@@ -8,7 +8,7 @@ namespace Shooter
         public WeaponBase ActiveWeapon;
         public UnityEvent WeaponChanged = new UnityEvent();
         private Timer _timer;
-        private int _index = 0;
+        private int _index = 1;
         private KeyCode _fire = KeyCode.Mouse0;
         private KeyCode _reload = KeyCode.R;
         private MenuGamePause _pauseMenu;
@@ -86,7 +86,7 @@ namespace Shooter
                     ActiveWeapon.BulletsCount = ActiveWeapon.BulletsInClip;
                 }
 
-                UIInterface.BulletsCount.TxtBullets.text = $"{ActiveWeapon.ClipsCount}/{ActiveWeapon.BulletsCount}  {Inventory.Weapons.Length}";
+                UIInterface.BulletsCount.TxtBullets.text = $"{ActiveWeapon.ClipsCount}/{ActiveWeapon.BulletsCount}";
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -98,7 +98,9 @@ namespace Shooter
         private void ChangeWeapon(int index)
         {
             if (ActiveWeapon) ActiveWeapon.IsVisible(false);
-            _index = index - 1;
+            UIInterface.BulletsCount.Images[_index].enabled = false;
+            _index = index;
+            UIInterface.BulletsCount.Images[_index].enabled = true;
             ActiveWeapon = Inventory.Weapons[_index];
             ActiveWeapon.IsVisible(true);
             WeaponChanged?.Invoke();

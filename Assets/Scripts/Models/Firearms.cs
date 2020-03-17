@@ -12,7 +12,7 @@ namespace Shooter
             base.Awake();
             _explosion = GetComponentInChildren<ParticleSystem>();
             _shoot = GetComponent<AudioSource>();
-            //_explosion.Stop();
+            _explosion.Stop();
         }
         
         public override void Fire()

@@ -13,10 +13,13 @@ namespace Shooter
         public AudioMixer audioSettings;
         public bool InterfacePause = false;
         public UnityEvent PressedClose = new UnityEvent();
+        public AudioClip[] Sounds;
+        public AudioSource _audioSource;
 
         private void Awake()
         {
             Animator = GetComponent<Animator>();
+            _audioSource = GetComponent<AudioSource>();
         }
 
         public void MainMenu()
@@ -45,6 +48,24 @@ namespace Shooter
         public void SfxSoundControl(float value)
         {
             audioSettings.SetFloat("SfxVolume", value);
+        }
+
+        public void HighLighted()
+        {
+            _audioSource.clip = Sounds[0];
+            _audioSource.Play();
+        }
+
+        public void CloseSound()
+        {
+            _audioSource.clip = Sounds[1];
+            _audioSource.Play();
+        }
+
+        public void OpenSound()
+        {
+            _audioSource.clip = Sounds[2];
+            _audioSource.Play();
         }
     }
 }

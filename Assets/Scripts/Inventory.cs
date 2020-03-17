@@ -16,6 +16,8 @@ namespace Shooter
             FlashLight = Object.FindObjectOfType<FlashLightModel>();
             Player = GameObject.FindGameObjectWithTag(TagManager.PLAYER);
             Weapons = Player.GetComponentsInChildren<WeaponBase>();
+            Debug.Log("Inventory " + Weapons.Length);
+            
             foreach (WeaponBase weapon in Weapons)
             {
                 weapon.ClipsCount = weapon.ClipsMaxCount;

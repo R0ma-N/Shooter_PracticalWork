@@ -94,7 +94,11 @@ namespace Shooter
                     _camera.SetBool("IsShooting", false);
                     _playerAnimation.SetBool("Aiming", false);
                     _playerController.Aiming(false);
-                    _weaponController.ActiveWeapon.IsVisible(false);
+                    for (int i = 0; i < Inventory.Weapons.Length; i++)
+                    {
+                        Inventory.Weapons[i].IsVisible(false); 
+                    }
+                    //_weaponController.ActiveWeapon.IsVisible(false);
                 }
 
                 if (Input.GetKeyDown(KeyCode.Space))
@@ -153,6 +157,7 @@ namespace Shooter
                 Cursor.visible = true;
                 _isPaused = true;
                 Time.timeScale = 0;
+                _pauseMenu.OpenSound();
             }
             else
             {
@@ -162,11 +167,13 @@ namespace Shooter
                 _isPaused = false;
                 _pauseMenu.PressedClose.RemoveListener(SwitchPause);
                 Time.timeScale = 1;
+                _pauseMenu.CloseSound();
             }
 
             base.Switch();
             _pauseMenu.Animator.SetBool("Open", _isPaused);
             _pauseScreen.MakeDarkScreen(_isPaused);
+            
         }
 
         private void isFlamethrower()

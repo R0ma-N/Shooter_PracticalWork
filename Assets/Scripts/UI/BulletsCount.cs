@@ -9,6 +9,7 @@ namespace Shooter
         public Image[] Images;
         public Image FlameThrowerImg;
         public Image PistolImg;
+
         private void Awake()
         {
             TxtBullets = GetComponentInChildren<Text>();
