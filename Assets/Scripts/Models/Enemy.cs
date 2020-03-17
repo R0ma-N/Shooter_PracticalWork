@@ -13,6 +13,8 @@ namespace Shooter
         public ZoneOfDetect ZoneOfDetect;
         public BodyDron Body;
         public EyeDron Eye;
+        public bool PlayerDetected;
+        public EnemyStates State;
 
         protected override void Awake()
         {
@@ -23,9 +25,28 @@ namespace Shooter
             Explotion = GetComponentInChildren<ParticleSystem>();
             Weapon = GetComponentInChildren<WeaponDron>();
             ZoneOfDetect = GetComponentInChildren<ZoneOfDetect>();
+            State = new EnemyStates();
+
+            Eye.EyeGetDamage.AddListener(Destroy);
+            Body.BodyGetDamage.AddListener(GetDamage);
+            Explotion.Stop();
         }
 
-        public void Destroy(float time)
+        private void Update()
+        {
+            PlayerDetected = ZoneOfDetect.PlayerDetected;
+        }
+
+        private void GetDamage()
+        {
+            Health -= Body.Damage;
+            if (Health <= 0)
+            {
+                Destroy();
+            }
+        }
+
+        public void Destroy()
         {
             Eye.Light.enabled = false;
             Agent.enabled = false;
@@ -34,7 +55,7 @@ namespace Shooter
             Body.Rigidbody.isKinematic = false;
             Eye.Rigidbody.isKinematic = false;
             Explotion.Play();
-            Destroy(gameObject, time);
+            //Destroy(gameObject, time);
         }
 
     }

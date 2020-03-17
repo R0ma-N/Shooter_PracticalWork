@@ -9,7 +9,7 @@ namespace Shooter
         
         override protected void Awake()
         {
-            base.Awake();
+             base.Awake();
             _fire = GetComponentInChildren<ParticleSystem>();
             _fire.Stop();
         }
