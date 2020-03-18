@@ -14,6 +14,7 @@ namespace Shooter
         public Transform rightHandObj = null;
         public Transform leftHandObj = null;
         public Transform lookObj = null;
+        private AudioSource _step;
 
         [SerializeField] private PostProcessProfile _pprofile;
         public ColorGrading _colorGrading;
@@ -21,6 +22,17 @@ namespace Shooter
         void Start()
         {
             animator = GetComponent<Animator>();
+            _step = GetComponent<AudioSource>();
+        }
+        
+        public void Footstep(string s)
+        {
+            _step.Play();
+        }
+
+        public void Footstep2(string s)
+        {
+            _step.Play();
         }
 
         //Вызывается при расчёте IK

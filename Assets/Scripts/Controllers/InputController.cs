@@ -58,6 +58,7 @@ namespace Shooter
                 if (Input.GetKeyDown(KeyCode.W))
                 {
                     _playerAnimation.SetBool("forward", true);
+                    _playerAnimation.SetFloat("Blend", 0.5f);
                 }
                 else if (Input.GetKeyUp(KeyCode.W))
                 {
