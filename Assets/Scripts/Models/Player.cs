@@ -5,7 +5,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 namespace Shooter
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IOnInitialize
     {
         protected Animator animator;
 
@@ -14,15 +14,25 @@ namespace Shooter
         public Transform rightHandObj = null;
         public Transform leftHandObj = null;
         public Transform lookObj = null;
+        public Transform Body;
+        private Transform[] Objs;
         private AudioSource _step;
 
         [SerializeField] private PostProcessProfile _pprofile;
         public ColorGrading _colorGrading;
 
-        void Start()
+        public void OnStart()
         {
             animator = GetComponent<Animator>();
             _step = GetComponent<AudioSource>();
+            Objs = GetComponentsInChildren<Transform>();
+            for (int i = 0; i < Objs.Length; i++)
+            {
+                if (Objs[i].name == "Tops")
+                {
+                    Body = Objs[i];
+                }
+            }
         }
         
         public void Footstep(string s)

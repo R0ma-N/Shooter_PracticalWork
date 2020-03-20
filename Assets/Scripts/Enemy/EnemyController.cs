@@ -15,7 +15,7 @@ namespace Shooter
         {
             //_dron = GameObject.FindObjectOfType<Enemy>();
             _drons = GameObject.FindObjectsOfType<Enemy>();
-            _player = GameObject.FindGameObjectWithTag(TagManager.PLAYER).transform;
+            _player = GameObject.FindObjectOfType<Player>().Body;
             //_zoneOfDetect = GameObject.FindObjectOfType<ZoneOfDetect>();
             //_dron.Eye.EyeGetDamage.AddListener(Death);
             //_dron.Body.BodyGetDamage.AddListener(GetDamage);

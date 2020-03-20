@@ -19,6 +19,7 @@ namespace Shooter
         private FlashLightController _flashLightController;
         private WeaponController _weaponController;
         private EnemyController _enemyController;
+        private Player _player;
         private IOnUpdate[] _controllersUpdate;
         private IOnInitialize[] _controllersInit;
 
@@ -29,10 +30,12 @@ namespace Shooter
             _flashLightController = new FlashLightController();
             _weaponController = new WeaponController();
             _enemyController = new EnemyController();
+            _player = GameObject.FindObjectOfType<Player>();
             
-            _controllersInit = new IOnInitialize[2];
+            _controllersInit = new IOnInitialize[3];
             _controllersInit[0] = _flashLightController;
-            _controllersInit[1] = _enemyController;
+            _controllersInit[1] = _player;
+            _controllersInit[2] = _enemyController;
             
             _controllersUpdate = new IOnUpdate[4];
             _controllersUpdate[0] = _inputController;

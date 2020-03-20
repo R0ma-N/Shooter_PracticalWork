@@ -30322,7 +30322,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7814502684536964681
 Transform:
   m_ObjectHideFlags: 0
@@ -30612,6 +30612,7 @@ MonoBehaviour:
   rightHandObj: {fileID: 1898070599}
   leftHandObj: {fileID: 2113438426}
   lookObj: {fileID: 1284647201}
+  Body: {fileID: 0}
   _pprofile: {fileID: 11400000, guid: b74204b251684914981e526754bf6c67, type: 2}
   _colorGrading: {fileID: 0}
 --- !u!82 &8296172668763553727
