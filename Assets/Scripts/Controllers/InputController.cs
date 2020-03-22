@@ -54,34 +54,39 @@ namespace Shooter
 
             if (IsActive)
             {
-                
-                if (Input.GetKeyDown(KeyCode.W))
-                {
-                    _playerAnimation.SetBool("forward", true);
-                    _playerAnimation.SetFloat("Blend", 0.5f);
-                }
-                else if (Input.GetKeyUp(KeyCode.W))
-                {
-                    _playerAnimation.SetBool("forward", false);
-                }
 
-                if (Input.GetKeyDown(_left))
-                {
-                    _playerAnimation.SetBool("Move Left", true);
-                }
-                else if (Input.GetKeyUp(_left))
-                {
-                    _playerAnimation.SetBool("Move Left", false);
-                }
+                //if (Input.GetKeyDown(KeyCode.W))
+                //{
+                //    _playerAnimation.SetBool("forward", true);
+                //    _playerAnimation.SetFloat("Blend", 0.5f);
+                //}
+                //else if (Input.GetKeyUp(KeyCode.W))
+                //{
+                //    _playerAnimation.SetBool("forward", false);
+                //}
 
-                if (Input.GetKeyDown(_right))
-                {
-                    _playerAnimation.SetBool("Move Right", true);
-                }
-                else if (Input.GetKeyUp(_right))
-                {
-                    _playerAnimation.SetBool("Move Right", false);
-                }
+                //if (Input.GetKeyDown(_left))
+                //{
+                //    _playerAnimation.SetBool("Move Left", true);
+                //}
+                //else if (Input.GetKeyUp(_left))
+                //{
+                //    _playerAnimation.SetBool("Move Left", false);
+                //}
+
+                //if (Input.GetKeyDown(_right))
+                //{
+                //    _playerAnimation.SetBool("Move Right", true);
+                //}
+                //else if (Input.GetKeyUp(_right))
+                //{
+                //    _playerAnimation.SetBool("Move Right", false);
+                //}
+
+                float x = Input.GetAxis("Horizontal");
+                float y = Input.GetAxis("Vertical");
+
+                Move(x, y);
 
                 if (Input.GetKeyDown(KeyCode.Mouse1))
                 {
@@ -99,7 +104,6 @@ namespace Shooter
                     {
                         Inventory.Weapons[i].IsVisible(false); 
                     }
-                    //_weaponController.ActiveWeapon.IsVisible(false);
                 }
 
                 if (Input.GetKeyDown(KeyCode.Space))
@@ -185,6 +189,12 @@ namespace Shooter
             }
             else { _isFlameThrower = false; };
             _playerAnimation.SetBool("FlameT", _isFlameThrower);
+        }
+
+        private void Move(float x, float y)
+        {
+            _playerAnimation.SetFloat("VelX", x);
+            _playerAnimation.SetFloat("VelY", y);
         }
     }
 }
