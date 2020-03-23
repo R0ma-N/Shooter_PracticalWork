@@ -8,6 +8,7 @@ namespace Shooter
         private Animator _animator;
         private bool _aiming;
         private Player _playerModel;
+        
 
         public PlayerController()
         {
@@ -24,27 +25,11 @@ namespace Shooter
         {
             _playerModel.ikActiveLight = state;
         }
-
-        public void Move(Direction move)
-        {
-            if(move == Direction.Left)
-            {
-                _animator.SetBool("Move Left", true);
-            }
-        }
         
         public void OnUpdate()
         {
             if (!IsActive) return;
             //_action.Move();
         }
-    }
-
-    public enum Direction
-    {
-        Left = 1,
-        Right,
-        Forward,
-        Back
     }
 }

@@ -16,6 +16,9 @@ namespace Shooter
         public bool PlayerDetected;
         public EnemyStates State;
 
+        private EnemyHealthUI _EnemyHealthUI;
+        private Canvas _healthCanvas;
+
         protected override void Awake()
         {
             base.Awake();
@@ -26,6 +29,7 @@ namespace Shooter
             Weapon = GetComponentInChildren<WeaponDron>();
             ZoneOfDetect = GetComponentInChildren<ZoneOfDetect>();
             State = new EnemyStates();
+            _EnemyHealthUI = GetComponentInChildren<EnemyHealthUI>();
 
             Eye.EyeGetDamage.AddListener(Destroy);
             Body.BodyGetDamage.AddListener(GetDamage);
@@ -40,6 +44,7 @@ namespace Shooter
         private void GetDamage()
         {
             Health -= Body.Damage;
+            _EnemyHealthUI.HealthValueUI.text = Health.ToString();
             if (Health <= 0)
             {
                 Destroy();
@@ -54,6 +59,7 @@ namespace Shooter
             Rigidbody.isKinematic = false;
             Body.Rigidbody.isKinematic = false;
             Eye.Rigidbody.isKinematic = false;
+            _healthCanvas.enabled = false;
             Explotion.Play();
             //Destroy(gameObject, time);
         }

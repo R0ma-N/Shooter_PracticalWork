@@ -92,14 +92,21 @@ namespace Shooter
                 {
                     _camera.SetBool("IsShooting", true);
                     _playerAnimation.SetBool("Aiming", true);
+                    _playerAnimation.SetLayerWeight(1, 1);
+                    _playerAnimation.SetLayerWeight(2, 1);
+
                     _playerController.Aiming(true);
                     _weaponController.ActiveWeapon.IsVisible(true);
                 }
                 else if (Input.GetKeyUp(KeyCode.Mouse1))
                 {
                     _camera.SetBool("IsShooting", false);
-                    _playerAnimation.SetBool("Aiming", false);
                     _playerController.Aiming(false);
+
+                    _playerAnimation.SetBool("Aiming", false);
+                    _playerAnimation.SetLayerWeight(1, 0);
+                    _playerAnimation.SetLayerWeight(2, 0);
+                    
                     for (int i = 0; i < Inventory.Weapons.Length; i++)
                     {
                         Inventory.Weapons[i].IsVisible(false); 
@@ -118,7 +125,6 @@ namespace Shooter
                 rotationX += xRot;
                 rotationX = Mathf.Clamp(rotationX, -30, 20);
                 Camera.main.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-
 
                 if (Input.GetKeyDown(_activeFlashLight))
                 {

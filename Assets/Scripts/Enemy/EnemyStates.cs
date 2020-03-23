@@ -52,12 +52,12 @@ namespace Shooter
                 //если луч не попал в цель
                 if (hit.collider.gameObject != target.gameObject)
                 {
-                    Debug.Log("Путь к врагу преграждает объект: " + hit.collider.name);
+                    //Debug.Log("Путь к врагу преграждает объект: " + hit.collider.name);
                 }
                 //если луч попал в цель
                 else
                 {
-                    Debug.Log("Попадаю во врага!!!");
+                    //Debug.Log("Попадаю во врага!!!");
                 }
                 //просто для наглядности рисуем луч в окне Scene
                 Debug.DrawLine(ray.origin, hit.point, Color.red);

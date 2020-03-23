@@ -5,18 +5,22 @@ using UnityEngine.Rendering.PostProcessing;
 
 namespace Shooter
 {
-    public class Player : MonoBehaviour, IOnInitialize
+    public class Player : MonoBehaviour, IOnInitialize, IDamageable
     {
-        protected Animator animator;
+        public float Health;
 
         public bool ikActiveFire = false;
         public bool ikActiveLight = false;
         public Transform rightHandObj = null;
         public Transform leftHandObj = null;
         public Transform lookObj = null;
-        public Transform Body;
+        public Transform CellForEnemy;
+
         private Transform[] Objs;
         private AudioSource _step;
+        private Animator animator;
+        private HealthBar _healthBarUI;
+        private ColorGraddingTrigger _vignette;
 
         [SerializeField] private PostProcessProfile _pprofile;
         public ColorGrading _colorGrading;
@@ -28,11 +32,13 @@ namespace Shooter
             Objs = GetComponentsInChildren<Transform>();
             for (int i = 0; i < Objs.Length; i++)
             {
-                if (Objs[i].name == "Tops")
+                if (Objs[i].name == "Cell for Enemy")
                 {
-                    Body = Objs[i];
+                    CellForEnemy = Objs[i];
                 }
             }
+            _healthBarUI = GameObject.FindObjectOfType<HealthBar>();
+            _vignette = GameObject.FindObjectOfType<ColorGraddingTrigger>();
         }
         
         public void Footstep(string s)
@@ -106,5 +112,12 @@ namespace Shooter
             }
         }
 
+        public void getDamage(float damage)
+        {
+            Health -= damage;
+            _healthBarUI.Health.size -= damage / 100;
+            _vignette.GetDamage();
+            Camera.main.GetComponent<Animator>().SetTrigger("Damage");
+        }
     }
 }

@@ -163,7 +163,7 @@ MonoBehaviour:
   Shader: {fileID: 0}
   Collider: {fileID: 0}
   _timeToDestruct: 10
-  _Damage: 10
+  _Damage: 5
 --- !u!96 &-7436599479465158180
 TrailRenderer:
   serializedVersion: 2

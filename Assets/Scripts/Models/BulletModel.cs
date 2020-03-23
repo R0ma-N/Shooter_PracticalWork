@@ -31,13 +31,10 @@ namespace Shooter
                 Debug.Log("CollissionDamag");
             }
 
-            if (collision.collider)
-            {
-            }
             Debug.Log(collision.collider.name);
             _trailRenderer.enabled = false;
             _rigidbody.velocity = new Vector3(0, 0, 0);
-            _explosion.Play();
+            //_explosion.Play();
             //_explotion.Play();
             Destroy(gameObject,0.7f);
         }
