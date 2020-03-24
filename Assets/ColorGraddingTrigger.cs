@@ -13,6 +13,7 @@ namespace Shooter
         private bool _isEnter;
         private bool _getDamage;
         private bool _damageDone;
+        private bool _isDying = false;
         private ColorGrading _colorGrading;
 
         void Start()
@@ -44,7 +45,7 @@ namespace Shooter
                 if(Vignette.intensity < 0.75)
                 {
                     Vignette.intensity.value += Time.deltaTime*3;
-                    print("++");
+                    //print("++");
                 }
                 else
                 {
@@ -59,7 +60,7 @@ namespace Shooter
                 if(Vignette.intensity > 0)
                 {
                     Vignette.intensity.value -= Time.deltaTime;
-                    print("--");
+                    //print("--");
                 }
                 else
                 {
@@ -68,11 +69,24 @@ namespace Shooter
                 }
                 return;
             }
+
+            if (_isDying)
+            {
+                if (Vignette.intensity < 1)
+                {
+                    Vignette.intensity.value += Time.deltaTime * 3;
+                }
+            }
         }
 
         public void GetDamage()
         {
             _getDamage = true;
+        }
+
+        public void Dying()
+        {
+            _isDying = true;
         }
     }
 }

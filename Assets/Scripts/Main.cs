@@ -32,10 +32,11 @@ namespace Shooter
             _enemyController = new EnemyController();
             _player = GameObject.FindObjectOfType<Player>();
             
-            _controllersInit = new IOnInitialize[3];
+            _controllersInit = new IOnInitialize[4];
             _controllersInit[0] = _flashLightController;
             _controllersInit[1] = _player;
             _controllersInit[2] = _enemyController;
+            _controllersInit[3] = _inputController;
             
             _controllersUpdate = new IOnUpdate[4];
             _controllersUpdate[0] = _inputController;

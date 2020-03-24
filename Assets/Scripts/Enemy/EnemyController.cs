@@ -7,15 +7,19 @@ namespace Shooter
         //public Enemy _dron = null;
         public Enemy[] _drons;
         private Transform _player;
+        private Player _playerScript;
         private EnemyStates _state = new EnemyStates();
         private ZoneOfDetect _zoneOfDetect;
-        private bool _playerDetected;
 
         public void OnStart()
         {
             //_dron = GameObject.FindObjectOfType<Enemy>();
             _drons = GameObject.FindObjectsOfType<Enemy>();
             _player = GameObject.FindObjectOfType<Player>().CellForEnemy;
+            _playerScript = GameObject.FindObjectOfType<Player>().GetComponent<Player>();
+            _playerScript.Death.AddListener(OnPlayersDeath);
+
+            IsActive = true;
             //_zoneOfDetect = GameObject.FindObjectOfType<ZoneOfDetect>();
             //_dron.Eye.EyeGetDamage.AddListener(Death);
             //_dron.Body.BodyGetDamage.AddListener(GetDamage);
@@ -30,13 +34,15 @@ namespace Shooter
 
         public void OnUpdate()
         {
+            if (!IsActive) return;
+
             if(_drons.Length > 0)
             {
                 for (int i = 0; i < _drons.Length; i++)
                 {
                     _drons[i].State.Patrol(_drons[i]);
 
-                    if (_drons[i].PlayerDetected)
+                    if (_drons[i].PlayerDetected && _player)
                     {
                         _drons[i].State.Attack(_drons[i], _player);
                     }
@@ -69,5 +75,12 @@ namespace Shooter
         //    _dron.Body.BodyGetDamage.RemoveAllListeners();
         //    _dron.Destroy(2);
         //}
+
+        private void OnPlayersDeath()
+        {
+            _player = null;
+            _playerScript.Death.RemoveListener(OnPlayersDeath);
+        }
     }
+
 }

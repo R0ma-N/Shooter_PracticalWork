@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering.PostProcessing;
 
 namespace Shooter
@@ -15,11 +16,13 @@ namespace Shooter
         public Transform leftHandObj = null;
         public Transform lookObj = null;
         public Transform CellForEnemy;
+        public UnityEvent Death = new UnityEvent();
 
         private Transform[] Objs;
         private AudioSource _step;
         private Animator animator;
         private HealthBar _healthBarUI;
+        private GameOverUI _gameOverUI;
         private ColorGraddingTrigger _vignette;
 
         [SerializeField] private PostProcessProfile _pprofile;
@@ -39,6 +42,7 @@ namespace Shooter
             }
             _healthBarUI = GameObject.FindObjectOfType<HealthBar>();
             _vignette = GameObject.FindObjectOfType<ColorGraddingTrigger>();
+            _gameOverUI = GameObject.FindObjectOfType<GameOverUI>().GetComponent<GameOverUI>();
         }
         
         public void Footstep(string s)
@@ -117,7 +121,28 @@ namespace Shooter
             Health -= damage;
             _healthBarUI.Health.size -= damage / 100;
             _vignette.GetDamage();
-            Camera.main.GetComponent<Animator>().SetTrigger("Damage");
+            
+            if (Health <= 0)
+            {
+                Dying();
+            }
+        }
+
+        private void Dying()
+        {
+            Time.timeScale = 0.5f;
+
+            rightHandObj = null;
+            leftHandObj = null;
+            lookObj = null;
+
+            animator.SetTrigger("Dying");
+            Camera.main.GetComponent<Animator>().SetTrigger("Death");
+            GameObject.FindGameObjectWithTag("Finish").SetActive(false);
+
+            _vignette.Dying();
+            _gameOverUI.GameOverText();
+            Death?.Invoke();
         }
     }
 }

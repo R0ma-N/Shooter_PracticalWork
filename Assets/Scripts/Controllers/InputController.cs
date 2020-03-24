@@ -4,12 +4,13 @@ using UnityEngine.Rendering.PostProcessing;
 
 namespace Shooter
 {
-    public class InputController : BaseController, IOnUpdate
+    public class InputController : BaseController, IOnUpdate, IOnInitialize
     {
         private PostProcessProfile _pprofile;
         private FlashLightController _flashLightController = new FlashLightController();
         private WeaponController _weaponController = new WeaponController();
         private PlayerController _playerController = new PlayerController();
+        private Player _playerScript;
         private PauseScreen _pauseScreen;
         private SaveDataRepository _saveDataRepository = new SaveDataRepository();
         private CellPoint _cellPointUI;
@@ -22,14 +23,13 @@ namespace Shooter
         private float sensitivity = 4;
         private bool _isPaused;
         private bool _isFlameThrower;
+        private bool _playerIsDead = false;
 
         private KeyCode _activeFlashLight = KeyCode.F;
+        private KeyCode _kneeling = KeyCode.LeftControl;
         private KeyCode _cancel = KeyCode.Escape;
         private KeyCode _save = KeyCode.C;
         private KeyCode _load = KeyCode.V;
-
-        private KeyCode _left = KeyCode.A;
-        private KeyCode _right = KeyCode.D;
 
         float rotationX = 0;
 
@@ -40,49 +40,27 @@ namespace Shooter
             _playerAnimation = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Animator>();
             _camera = Camera.main.GetComponent<Animator>();
             _player = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Transform>();
+            _playerScript = GameObject.FindGameObjectWithTag(TagManager.PLAYER).GetComponent<Player>();
             _panelManager = GameObject.FindObjectOfType<PanelManager>();
             _cellPointUI = GameObject.FindObjectOfType<CellPoint>();
             _pauseScreen = GameObject.FindObjectOfType<PauseScreen>();
             _pprofile = GameObject.FindObjectOfType<ColorGraddingTrigger>().pprofile;
             _pauseMenu = GameObject.FindObjectOfType<MenuGamePause>();
             _weaponController.WeaponChanged.AddListener(isFlamethrower);
-            IsActive = true;
+            _playerScript.Death.AddListener(OffController);
         }
         
+        public void OnStart()
+        {
+            IsActive = true;
+            _playerIsDead = false;
+            Time.timeScale = 1;
+        }
+
         public void OnUpdate()
         {
-
             if (IsActive)
             {
-
-                //if (Input.GetKeyDown(KeyCode.W))
-                //{
-                //    _playerAnimation.SetBool("forward", true);
-                //    _playerAnimation.SetFloat("Blend", 0.5f);
-                //}
-                //else if (Input.GetKeyUp(KeyCode.W))
-                //{
-                //    _playerAnimation.SetBool("forward", false);
-                //}
-
-                //if (Input.GetKeyDown(_left))
-                //{
-                //    _playerAnimation.SetBool("Move Left", true);
-                //}
-                //else if (Input.GetKeyUp(_left))
-                //{
-                //    _playerAnimation.SetBool("Move Left", false);
-                //}
-
-                //if (Input.GetKeyDown(_right))
-                //{
-                //    _playerAnimation.SetBool("Move Right", true);
-                //}
-                //else if (Input.GetKeyUp(_right))
-                //{
-                //    _playerAnimation.SetBool("Move Right", false);
-                //}
-
                 float x = Input.GetAxis("Horizontal");
                 float y = Input.GetAxis("Vertical");
 
@@ -118,6 +96,15 @@ namespace Shooter
                     _playerAnimation.SetTrigger("Jump");
                 }
 
+                if (Input.GetKey(_kneeling))
+                {
+                    _playerAnimation.SetBool("Kneeling", true);
+                }
+                else
+                {
+                    _playerAnimation.SetBool("Kneeling", false);
+                }
+
                 float yRot = Input.GetAxis("Mouse X") * sensitivity;
                 float xRot = Input.GetAxis("Mouse Y") * sensitivity;
                 _player.localRotation *= Quaternion.Euler(0f, yRot, 0f);
@@ -135,6 +122,21 @@ namespace Shooter
                     _playerController.Lighting(isOn);
                     Debug.Log(isOn);
                 }
+                
+                if (Input.GetKeyDown(_save))
+                {
+                    _saveDataRepository.Save();
+                }
+
+                if (Input.GetKeyDown(_load))
+                {
+                    _saveDataRepository.Load();
+                }
+
+                if (Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0)
+                {
+                    isFlamethrower();
+                }
             }
 
             if (Input.GetKeyDown(_cancel))
@@ -144,20 +146,6 @@ namespace Shooter
                 SwitchPause();
             }
 
-            if (Input.GetKeyDown(_save))
-            {
-                _saveDataRepository.Save();
-            }
-
-            if (Input.GetKeyDown(_load))
-            {
-                _saveDataRepository.Load();
-            }
-
-            if (Mathf.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0)
-            {
-                isFlamethrower();
-            }
         }
 
         public void SwitchPause()
@@ -181,10 +169,13 @@ namespace Shooter
                 _pauseMenu.CloseSound();
             }
 
-            base.Switch();
+            if (!_playerIsDead)
+            {
+                base.Switch();
+            }
+
             _pauseMenu.Animator.SetBool("Open", _isPaused);
             _pauseScreen.MakeDarkScreen(_isPaused);
-            
         }
 
         private void isFlamethrower()
@@ -194,6 +185,7 @@ namespace Shooter
                 _isFlameThrower = true;
             }
             else { _isFlameThrower = false; };
+
             _playerAnimation.SetBool("FlameT", _isFlameThrower);
         }
 
@@ -201,6 +193,14 @@ namespace Shooter
         {
             _playerAnimation.SetFloat("VelX", x);
             _playerAnimation.SetFloat("VelY", y);
+        }
+
+        public void OffController()
+        {
+            _playerAnimation.SetLayerWeight(1, 0);
+            _playerAnimation.SetLayerWeight(2, 0);
+            base.Switch();
+            _playerIsDead = true;
         }
     }
 }

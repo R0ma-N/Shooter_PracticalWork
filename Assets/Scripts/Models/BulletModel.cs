@@ -20,7 +20,7 @@ namespace Shooter
             _meshRenderer = GetComponent<MeshRenderer>();
             TryGetComponent<AudioSource>(out AudioSource explotion);
             _explotion = explotion;
-            _explosion.Stop();
+            //_explosion.Stop();
         }
 
         public void OnCollisionEnter(Collision collision)

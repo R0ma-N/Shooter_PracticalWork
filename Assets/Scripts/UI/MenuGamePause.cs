@@ -30,6 +30,11 @@ namespace Shooter
             SceneManager.LoadScene(0);
         }
 
+        public void RestartLevel()
+        {
+            SceneManager.LoadScene(1);
+        }
+
         public void Close()
         {
             PressedClose?.Invoke();
