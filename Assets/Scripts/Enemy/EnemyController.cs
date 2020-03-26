@@ -4,7 +4,6 @@ namespace Shooter
 {
     public class EnemyController : BaseController, IOnUpdate, IOnInitialize
     {
-        //public Enemy _dron = null;
         public Enemy[] _drons;
         private Transform _player;
         private Player _playerScript;
@@ -36,19 +35,22 @@ namespace Shooter
         {
             if (!IsActive) return;
 
-            if(_drons.Length > 0)
+            if (_drons.Length > 0)
             {
                 for (int i = 0; i < _drons.Length; i++)
                 {
-                    _drons[i].State.Patrol(_drons[i]);
+                    _drons[i].Patrol();
 
                     if (_drons[i].PlayerDetected && _player)
                     {
-                        _drons[i].State.Attack(_drons[i], _player);
+                        _drons[i].Attack(_player);
                     }
+                    else return;
+
+                    _drons[i].GotoNextPoint();
                 }
             }
-            
+
             //if (!_drons) return;
 
             //_playerDetected = _zoneOfDetect.PlayerDetected;
@@ -59,7 +61,7 @@ namespace Shooter
             //    _state.Attack(_dron, _player);
             //}
         }
-        
+
         //private void GetDamage()
         //{
         //    _drons.Health -= _dron.Body.Damage;
