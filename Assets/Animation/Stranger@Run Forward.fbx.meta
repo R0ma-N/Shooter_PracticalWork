@@ -62,15 +62,15 @@ ModelImporter:
       events:
       - time: 0.2881002
         functionName: Footstep
-        data: One
-        objectReferenceParameter: {fileID: 11500000, guid: 04b35fb063fa645458d472d7dda02fa2,
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 331a100b3868c894bae7ac5fba59dc53,
           type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.84239125
-        functionName: Footstep2
-        data: Two
+        functionName: Footstep
+        data: 
         objectReferenceParameter: {fileID: 11500000, guid: 04b35fb063fa645458d472d7dda02fa2,
           type: 3}
         floatParameter: 0

@@ -9,6 +9,14 @@ namespace Shooter
     {
         public UnityEvent BodyGetDamage = new UnityEvent();
         public float Damage;
+        public Material MaterialLights;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            MaterialLights = GetComponent<MeshRenderer>().material;
+        }
+        
         public void getDamage(float damage)
         {
             BodyGetDamage?.Invoke();

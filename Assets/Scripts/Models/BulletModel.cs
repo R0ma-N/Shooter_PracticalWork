@@ -4,7 +4,8 @@ namespace Shooter
 {
     public class BulletModel : Ammunition
     {
-        private ParticleSystem _explosion;
+        public ParticleSystem _explosion;
+        public Light _light;
         private TrailRenderer _trailRenderer;
         private Rigidbody _rigidbody;
         private MeshRenderer _meshRenderer;
@@ -14,13 +15,14 @@ namespace Shooter
         {
             base.Awake();
             Destroy(gameObject, _timeToDestruct);
-            _explosion = GetComponentInChildren<ParticleSystem>();
             _trailRenderer = GetComponent<TrailRenderer>();
             _rigidbody = GetComponent<Rigidbody>();
-            _meshRenderer = GetComponent<MeshRenderer>();
+            _meshRenderer = GetComponentInChildren<MeshRenderer>();
             TryGetComponent<AudioSource>(out AudioSource explotion);
             _explotion = explotion;
-            //_explosion.Stop();
+            if(_explosion)
+            _explosion.Pause();
+            //_light = GetComponent<Light>();
         }
 
         public void OnCollisionEnter(Collision collision)
@@ -34,8 +36,11 @@ namespace Shooter
             Debug.Log(collision.collider.name);
             _trailRenderer.enabled = false;
             _rigidbody.velocity = new Vector3(0, 0, 0);
-            //_explosion.Play();
-            //_explotion.Play();
+            _meshRenderer.enabled = false;
+            _light.enabled = false;
+            if(_explosion)
+            _explosion.Play();
+            _explotion.Play();
             Destroy(gameObject,0.7f);
         }
     }

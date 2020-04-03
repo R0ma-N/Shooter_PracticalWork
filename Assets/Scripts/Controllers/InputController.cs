@@ -178,7 +178,7 @@ namespace Shooter
             _pauseScreen.MakeDarkScreen(_isPaused);
         }
 
-        private void isFlamethrower()
+        public void isFlamethrower()
         {
             if(_isFlameThrower == false)
             {

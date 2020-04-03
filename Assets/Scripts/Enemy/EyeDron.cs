@@ -10,11 +10,13 @@ namespace Shooter
         public Light Light;
         public UnityEvent EyeGetDamage = new UnityEvent();
         public float Damage;
+        public Material MaterialLights;
 
         override protected void Awake()
         {
             base.Awake();
             Light = GetComponent<Light>();
+            MaterialLights = GetComponent<MeshRenderer>().material;
         }
 
         public void getDamage(float damage)

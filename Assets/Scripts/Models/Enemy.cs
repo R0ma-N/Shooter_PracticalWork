@@ -3,57 +3,91 @@ using UnityEngine.AI;
 
 namespace Shooter
 {
-    public class Enemy : BaseObjectModel
+    public class Enemy : MonoBehaviour, IOnInitialize
     {
-        public float Health;
-        public Transform[] PatrolPoints;
-        public int IndexOfDestinationPoint;
+        public AudioSource _audioSource;
+        public AudioClip PatrolSound;
+        public AudioClip AttackSound;
+        public AudioClip FireSound;
+        public AudioClip DeathSound;
+        
+        public Rigidbody Rigidbody;
+        public bool MomentaryDeath = false;
 
+        public Transform[] PatrolPoints;
+        private int IndexOfDestinationPoint;
         public NavMeshAgent Agent;
-        public WeaponDron Weapon;
-        public ParticleSystem Explotion;
         public ZoneOfDetect ZoneOfDetect;
+        private Player _playerScript;
+        public bool PlayerDetected;
+        
+        public WeaponDron Weapon;
+        public Transform _player;
+
+        public float Health;
+        public Canvas _healthCanvas;
+        public EnemyHealthUI _EnemyHealthUI;
         public BodyDron Body;
         public EyeDron Eye;
-        public bool PlayerDetected;
-        public EnemyStates State;
 
-        private EnemyHealthUI _EnemyHealthUI;
-        public Canvas _healthCanvas;
+        public ParticleSystem Explotion;
+        public bool IsDead = false;
 
-        protected override void Awake()
+        [SerializeField] private SpriteRenderer MapPoint;
+
+        public void OnStart()
         {
-            base.Awake();
-            Body = GetComponentInChildren<BodyDron>();
-            Eye = GetComponentInChildren<EyeDron>();
-            Agent = GetComponent<NavMeshAgent>();
-            Explotion = GetComponentInChildren<ParticleSystem>();
-            Weapon = GetComponentInChildren<WeaponDron>();
-            ZoneOfDetect = GetComponentInChildren<ZoneOfDetect>();
-            State = new EnemyStates();
-            _EnemyHealthUI = GetComponentInChildren<EnemyHealthUI>();
-            _healthCanvas = GetComponentInChildren<Canvas>();
+            //Body = GetComponentInChildren<BodyDron>();
+            //Eye = GetComponentInChildren<EyeDron>();
+            //Agent = GetComponent<NavMeshAgent>();
+            //Weapon = GetComponentInChildren<WeaponDron>();
+            //ZoneOfDetect = GetComponentInChildren<ZoneOfDetect>();
+
+            //_EnemyHealthUI = GetComponentInChildren<EnemyHealthUI>();
+            //_healthCanvas = GetComponentInChildren<Canvas>();
 
             Eye.EyeGetDamage.AddListener(Destroy);
             Body.BodyGetDamage.AddListener(GetDamage);
+
+            //_player = GameObject.FindObjectOfType<Player>().CellForEnemy;
+            _playerScript = GameObject.FindObjectOfType<Player>().GetComponent<Player>();
+            _playerScript.Death.AddListener(OnPlayersDeath);
+            //_audioSource = GetComponent<AudioSource>();
+
+            //Explotion = GetComponentInChildren<ParticleSystem>();
             Explotion.Stop();
+            
             Agent.destination = PatrolPoints[IndexOfDestinationPoint].position;
         }
 
         private void Update()
         {
+            if (IsDead) return;
+
             PlayerDetected = ZoneOfDetect.PlayerDetected;
+
+            if (!PlayerDetected) 
+            {
+                Patrol();
+            } 
+            else if (_player) Attack(_player);
 
             if (Input.GetKey(KeyCode.Mouse1))
             {
                 _EnemyHealthUI.HealthValueUI.text = Health.ToString();
             }
             else _EnemyHealthUI.HealthValueUI.text = " ";
+
+            if (MomentaryDeath)
+            {
+                Destroy();
+            }
         }
 
-        private void GetDamage()
+        public void GetDamage()
         {
             Health -= Body.Damage;
+
             _EnemyHealthUI.HealthValueUI.text = Health.ToString();
             if (Health <= 0)
             {
@@ -63,13 +97,19 @@ namespace Shooter
 
         public void Destroy()
         {
+            _EnemyHealthUI.HealthValueUI.text = " ";
+            IsDead = true;
             Eye.Light.enabled = false;
             Agent.enabled = false;
             Agent = null;
             Rigidbody.isKinematic = false;
             Body.Rigidbody.isKinematic = false;
-            Eye.Rigidbody.isKinematic = false;
-            _EnemyHealthUI.HealthValueUI.text = " ";
+            Body.MaterialLights.SetColor("_EmissionColor", Color.black);
+            Eye.MaterialLights.SetColor("_EmissionColor", Color.black);
+            Eye.MaterialLights.SetColor("_Color", Color.black);
+            MapPoint.enabled = false;
+            _audioSource.clip = DeathSound;
+            _audioSource.Play();
             Explotion.Play();
             Destroy(gameObject, 40);
         }
@@ -82,6 +122,11 @@ namespace Shooter
                 GotoNextPoint();
             }
 
+            _audioSource.clip = PatrolSound;
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+            }
             Eye.Light.color = Color.green;
         }
 
@@ -91,6 +136,13 @@ namespace Shooter
             Agent.stoppingDistance = 5;
             transform.LookAt(target.transform);
             Weapon.Fire();
+
+            _audioSource.clip = AttackSound;
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+            }
+
             //сюда запишется инфо о пересечении луча, если оно будет
             RaycastHit hit;
             //сам луч, начинается от позиции этого объекта и направлен в сторону цели
@@ -110,6 +162,7 @@ namespace Shooter
                 else
                 {
                     //Debug.Log("Попадаю во врага!!!");
+                    
                 }
                 //просто для наглядности рисуем луч в окне Scene
                 Debug.DrawLine(ray.origin, hit.point, Color.red);
@@ -117,7 +170,7 @@ namespace Shooter
             }
         }
 
-        public void GotoNextPoint()
+        private void GotoNextPoint()
         {
             // Returns if no points have been set up
             if (PatrolPoints.Length == 0)
@@ -131,5 +184,14 @@ namespace Shooter
             // cycling to the start if necessary.
             IndexOfDestinationPoint = (IndexOfDestinationPoint + 1) % PatrolPoints.Length;
         }
+
+        public void OnPlayersDeath()
+        {
+            _player = null;
+            GotoNextPoint();
+
+            //_playerScript.Death.RemoveListener(OnPlayersDeath);
+        }
+
     }
 }

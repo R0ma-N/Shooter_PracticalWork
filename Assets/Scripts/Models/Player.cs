@@ -9,6 +9,10 @@ namespace Shooter
     public class Player : MonoBehaviour, IOnInitialize, IDamageable
     {
         public float Health;
+        public AudioSource Music;
+        public AudioClip[] Sounds;
+        public AudioClip[] PainSounds;
+        public AudioClip HealSound;
 
         public bool ikActiveFire = false;
         public bool ikActiveLight = false;
@@ -19,7 +23,7 @@ namespace Shooter
         public UnityEvent Death = new UnityEvent();
 
         private Transform[] Objs;
-        private AudioSource _step;
+        private AudioSource _audioSourse;
         private Animator animator;
         private HealthBar _healthBarUI;
         private GameOverUI _gameOverUI;
@@ -30,8 +34,9 @@ namespace Shooter
 
         public void OnStart()
         {
+            Music.pitch = 1;
             animator = GetComponent<Animator>();
-            _step = GetComponent<AudioSource>();
+            _audioSourse = GetComponent<AudioSource>();
             Objs = GetComponentsInChildren<Transform>();
             for (int i = 0; i < Objs.Length; i++)
             {
@@ -45,14 +50,29 @@ namespace Shooter
             _gameOverUI = GameObject.FindObjectOfType<GameOverUI>().GetComponent<GameOverUI>();
         }
         
-        public void Footstep(string s)
+        public void Footstep()
         {
-            _step.Play();
+            if (_audioSourse ==  Sounds[0])
+            {
+                _audioSourse.volume = 0.8f;
+                _audioSourse.Play();
+            }
+            else
+            {
+                if (!_audioSourse.isPlaying)
+                {
+                    _audioSourse.clip = Sounds[0];
+                    _audioSourse.volume = 0.6f;
+                    _audioSourse.Play();
+                }
+            }
         }
 
-        public void Footstep2(string s)
+        public void GotWeaponSound()
         {
-            _step.Play();
+            _audioSourse.clip = Sounds[1];
+            _audioSourse.volume = 0.2f;
+            _audioSourse.Play();
         }
 
         //Вызывается при расчёте IK
@@ -121,11 +141,23 @@ namespace Shooter
             Health -= damage;
             _healthBarUI.Health.size -= damage / 100;
             _vignette.GetDamage();
+
+            _audioSourse.clip = PainSounds[Random.Range(0, 2)];
+            _audioSourse.Play();
             
             if (Health <= 0)
             {
                 Dying();
             }
+        }
+
+        public void Healing()
+        {
+            Health = 100;
+            _audioSourse.clip = HealSound;
+            _audioSourse.volume = 0.1f;
+            _audioSourse.Play();
+            _healthBarUI.Health.size = 1;
         }
 
         private void Dying()

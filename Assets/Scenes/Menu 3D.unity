@@ -2070,7 +2070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16015486, g: 0.5754717, b: 0.5754717, a: 1}
+  m_Color: {r: 0.063634746, g: 0.24528301, b: 0.24528301, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2101,8 +2101,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 920952687}
   m_LocalRotation: {x: 0, y: 0.25907195, z: 0, w: 0.96585804}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 99.8}
+  m_LocalScale: {x: 0.5023, y: 0.5023, z: 0.5023}
   m_Children:
   - {fileID: 1485042508}
   m_Father: {fileID: 1235861151}
@@ -2110,8 +2110,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8, y: 0.5566667}
   m_AnchorMax: {x: 1, y: 0.5566667}
-  m_AnchoredPosition: {x: -150, y: -16.2}
-  m_SizeDelta: {x: 300, y: 535.6}
+  m_AnchoredPosition: {x: -149.6, y: -26.6}
+  m_SizeDelta: {x: 558.6, y: 1099}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &928992391
 PrefabInstance:
@@ -2620,6 +2620,7 @@ GameObject:
   - component: {fileID: 1079458420}
   - component: {fileID: 1079458419}
   - component: {fileID: 1079458416}
+  - component: {fileID: 1079458417}
   m_Layer: 0
   m_Name: GUI Camera
   m_TagString: Untagged
@@ -2644,6 +2645,22 @@ MonoBehaviour:
   _horizontalShake: 0
   _colorDrift: 0
   _shader: {fileID: 4800000, guid: da33272284ea24f208f36998880990be, type: 3}
+--- !u!111 &1079458417
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079458415}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: f8450dcd9c479364b979c7ea44db06a6, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: f8450dcd9c479364b979c7ea44db06a6, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!20 &1079458419
 Camera:
   m_ObjectHideFlags: 0
@@ -3639,7 +3656,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 56712761a7435dd46b0760d8c9e06fae, type: 3}
-  m_Color: {r: 0.22352943, g: 0.47450984, b: 0.48235297, a: 1}
+  m_Color: {r: 0.74038804, g: 0.8823559, b: 0.8867924, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -4088,8 +4105,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1485042507}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.000030545256}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.053717833}
+  m_LocalScale: {x: 1.9908421, y: 1.9908421, z: 1.9908421}
   m_Children:
   - {fileID: 1615853515}
   - {fileID: 524375986}
@@ -4102,7 +4119,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000030517578, y: -17.8}
+  m_AnchoredPosition: {x: -0.88848877, y: -14.732229}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1491394423
@@ -4227,7 +4244,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 30.03, z: -89.711006}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 4.399994, y: 9.8}
+  m_AnchoredPosition: {x: 4.3999634, y: 9.8}
   m_SizeDelta: {x: 3.4, y: 478.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1588150828
@@ -5124,7 +5141,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -6432121478862483800, guid: fa2490c52485fe34086c10393b023381,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: cd0acd5cdaa1a4a4ba0917f6b728defd, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a2974166990a2914cbee8b2de50895bf, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -5504,8 +5521,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893751981}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.4, z: 77.8}
-  m_LocalScale: {x: 4.7260814, y: 4.7260814, z: 4.7260814}
+  m_LocalPosition: {x: -65.4, y: -32.4, z: 63.6}
+  m_LocalScale: {x: 3.1490355, y: 3.1490355, z: 3.1490355}
   m_Children:
   - {fileID: 1307606476}
   - {fileID: 646883582}

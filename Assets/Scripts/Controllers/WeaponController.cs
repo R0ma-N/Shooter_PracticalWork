@@ -146,7 +146,7 @@ namespace Shooter
             }
         }
 
-        private void ChangeWeapon(int index)
+        public void ChangeWeapon(int index)
         {
             if (ActiveWeapon) ActiveWeapon.IsVisible(false);
             UIInterface.BulletsCount.Images[_index].enabled = false;
@@ -158,7 +158,7 @@ namespace Shooter
             Debug.Log(ActiveWeapon);
         }
 
-        private void ChangeWeaponInvisible(int index)
+        public void ChangeWeaponInvisible(int index)
         {
             UIInterface.BulletsCount.Images[_index].enabled = false;
             _index = index;

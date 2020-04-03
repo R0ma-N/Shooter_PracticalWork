@@ -11,6 +11,7 @@ namespace Shooter
         [SerializeField] private Ammunition _ammunition = null;
         [SerializeField] private float _shootInterval = 0.5f;
         [SerializeField] private float _force = 999;
+        [SerializeField ]private AudioSource _audioSource;
 
         private bool _isReady;
         private Timer _timer = new Timer();
@@ -24,6 +25,7 @@ namespace Shooter
                 tempAmmunation.AddForce(_barrel.forward * _force);
                 tempAmmunation = Instantiate(_ammunition, _barrel2.position, _barrel2.rotation);
                 tempAmmunation.AddForce(_barrel.forward * _force);
+                _audioSource.Play();
             }
         }
     }

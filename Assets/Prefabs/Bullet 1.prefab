@@ -57,7 +57,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 6.8942446e+34, z: 1.5582279e+28, w: 7.15473e+22}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -240,7 +240,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.20392157, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -303,18 +303,18 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: d22add9310406466492fea0d086ee95a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.434
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 5
-  MinDistance: 1
+  DopplerLevel: 0
+  MinDistance: 449.3
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -347,7 +347,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -362,7 +362,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -377,7 +377,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -405,6 +405,8 @@ MonoBehaviour:
   Collider: {fileID: 0}
   _timeToDestruct: 10
   _Damage: 10
+  _explosion: {fileID: 377595586113393267}
+  _light: {fileID: 8208347758305787164}
 --- !u!1 &8835645946132477812
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +435,7 @@ Transform:
   m_GameObject: {fileID: 8835645946132477812}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0.1166, z: -0.6125}
-  m_LocalScale: {x: 1, y: 0.38757423, z: 0.7668}
+  m_LocalScale: {x: 0.38573, y: 0.7286008, z: 0.38422984}
   m_Children: []
   m_Father: {fileID: 2027687069148837949}
   m_RootOrder: 0
@@ -453,7 +455,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8835645946132477812}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -697,6 +699,21 @@ PrefabInstance:
       propertyPath: LightsModule.range
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 198856239026640498, guid: 9bba9cf244c53c5439505dfc96fdd11c,
+        type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 198856239026640498, guid: 9bba9cf244c53c5439505dfc96fdd11c,
+        type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 198856239026640498, guid: 9bba9cf244c53c5439505dfc96fdd11c,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 199517807662331752, guid: 9bba9cf244c53c5439505dfc96fdd11c,
         type: 3}
       propertyPath: m_Enabled
@@ -728,6 +745,12 @@ GameObject:
 --- !u!4 &571481398710184413 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4865135451303388, guid: 9bba9cf244c53c5439505dfc96fdd11c,
+    type: 3}
+  m_PrefabInstance: {fileID: 576187650290402305}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &377595586113393267 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198856239026640498, guid: 9bba9cf244c53c5439505dfc96fdd11c,
     type: 3}
   m_PrefabInstance: {fileID: 576187650290402305}
   m_PrefabAsset: {fileID: 0}
